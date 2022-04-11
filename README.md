@@ -12,3 +12,7 @@ Abanob Wahba
 # Tech Stack (Tentatively)
 React
 Node.js / Express.js
+
+# How to run
+[npm install] inside /project/frontend & /project
+[npm run yahallo] inside /project
