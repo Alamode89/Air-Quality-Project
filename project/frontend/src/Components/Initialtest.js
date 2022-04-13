@@ -26,18 +26,16 @@ const Initialtest = () => {
             })
     };
 
+
     const handleSubmit = async e => {
-        e.preventDefault();
-        const response = await fetch('/test/post', {
-            method: 'POST',
-            headers: {
-            'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ post: data.post }),
-        });
-        const body = await response.text();
-    
-        setData({ ...data, "responseToPost": body });
+       e.preventDefault();
+       let res = {post: data.post}
+       console.log("Send: " + res)
+        axios.post('/test/post', res)
+            .then(resAxios => {
+                setData({ ...data, "responseToPost": resAxios.data })
+                console.log("Response: " + resAxios.data)
+            })
     };
 
     return (
