@@ -1,0 +1,25 @@
+{
+  "name": "yahallo",
+  "version": "1.0.0",
+  "description": "CS180 Project Parsing Air Quality",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "node server.js",
+    "client": "npm start --prefix frontend",
+    "yahallo": "concurrently \"npm run server\" \"npm run client\"",
+    "new": "(npm install); (cd frontend && npm install); (curl -L \"https://tinyurl.com/bdt44yr6\" -o dataset.zip); (unzip dataset.zip); (rm -rf dataset.zip); (mv epa_air_quality_annual_summary.csv longassname.csv)"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alamode89/Air-Quality-Project"
+  },
+  "author": "Andre Amante, Kobe Braga, Roy Feng, Joseph Tham, Abanob Wahba",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "concurrently": "^7.1.0",
+    "express": "^4.17.3",
+    "fast-csv": "^4.3.6"
+  }
+}
