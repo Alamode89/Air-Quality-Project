@@ -35,22 +35,22 @@ const { text } = require('body-parser');
   */
 
 let rows = [];
-let columns = [undefined, undefined, undefined, undefined, undefined,
+let columns = [undefined, undefined, undefined, 'parameter_code', undefined,
     "latitude", "longitude", undefined, 'parameter_name', undefined,
     undefined, undefined, undefined, "year", undefined,
     undefined, undefined, undefined, undefined, undefined,
     undefined, undefined, undefined, undefined, undefined,
+    undefined, undefined, 'arithmetic_mean', undefined, undefined,
     undefined, undefined, undefined, undefined, undefined,
     undefined, undefined, undefined, undefined, undefined,
     undefined, undefined, undefined, undefined, undefined,
     undefined, undefined, undefined, undefined, undefined,
-    undefined, undefined, undefined, undefined, undefined,
-    undefined, undefined, 'city_name', undefined, undefined
+    'state_name', 'county_name', 'city_name', undefined, 'date_of_last_change'
 ]
 
 console.time("Timer1");
 fs.createReadStream(path.resolve(__dirname, 'longassname.csv'))
-    .pipe(parse({ headers: columns, maxRows: 70000 }))
+    .pipe(parse({ headers: columns, maxRows: 500000 }))
     .on('error', error => console.error(error))
     .on('data', row => {
         console.log(row);
@@ -87,7 +87,17 @@ app.post('/test/iloveithere', (req, res) => {
       //bruh = true
       res.send(
         //`Pollutant: ${rows[i].parameter_name}`
-        {latitude: rows[i].latitude, longitude: rows[i].longitude, parameter_name: rows[i].parameter_name, year: rows[i].year}
+        {latitude: rows[i].latitude, 
+          longitude: rows[i].longitude, 
+          parameter_name: rows[i].parameter_name, 
+          year: rows[i].year,
+          
+          parameter_code: rows[i].parameter_code,
+          county_name: rows[i].county_name,
+          state_name: rows[i].state_name,
+          date_of_last_change: rows[i].date_of_last_change,
+          arithmetic_mean: rows[i].arithmetic_mean
+        }
       )
       break;
     }
