@@ -57,13 +57,21 @@ const Initialtest = () => {
         console.log(inputVal)
     }
 
+    const [output, setOutput] = useState({
+        latitude: '',
+        longitude: '',
+        parameter: '',
+        year: ''
+    });
+
     const searchSubmit = async (e) => {
         // read ALL the data when searching for a single element
         e.preventDefault()
         setResValue("")
-        axios.get('test/get')
+        /*
+        axios.get('test/iloveithere')
             .then(res => {
-                console.log(res.data)
+                console.log(res.data) //our array from backend
                 setInfo(res.data) //makes data accessible outside of scope
                 Object.entries(info).map(([key, value]) => {
                     if (key.toLowerCase() == inputVal.toLowerCase()) {
@@ -74,6 +82,29 @@ const Initialtest = () => {
             })
             .catch(err => {
                 alert(err)
+            })*/
+        let incoming = { city: inputVal }
+        console.log("Our input: " + incoming)
+        axios.post('/test/iloveithere', incoming)
+            .then(resAxios => {
+                /*
+                {
+                    "latitude": 1231
+                    ...
+                    "year": 1929
+                }
+                */
+                console.log("Incoming Data: " + JSON.stringify(resAxios.data))
+                /*var whatWeGot = ""
+                whatWeGot += "Latitude: " + JSON.stringify(resAxios.data.latitude)
+                whatWeGot += "\nLongitude: " + JSON.stringify(resAxios.data.longitude)
+                whatWeGot += "\nParameter: " + JSON.stringify(resAxios.data.parameter_name)
+                whatWeGot += "\nyear: " + JSON.stringify(resAxios.data.year)
+
+                setResValue(whatWeGot)
+                */
+                setOutput({ ...output, "latitude": resAxios.data.latitude, "longitude": resAxios.data.longitude, "parameter": resAxios.data.parameter_name, "year": resAxios.data.year })
+                //console.log("Response: " + whatWeGot)
             })
 
     }
@@ -107,7 +138,11 @@ const Initialtest = () => {
                     <p>Search</p>
                     <input type="text" value={inputVal} onChange={handleTyping} />
                     <button type="submit">Search</button>
-                    <p>{resValue}</p>
+                    {/*<p>{resValue}</p>*/}
+                    <p>Latitude: {output.latitude}</p>
+                    <p>Longitude: {output.longitude}</p>
+                    <p>Pollutant: {output.parameter}</p>
+                    <p>Year: {output.year}</p>
                 </form>
             </div>
         </div>
