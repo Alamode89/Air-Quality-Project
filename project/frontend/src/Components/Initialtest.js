@@ -61,7 +61,13 @@ const Initialtest = () => {
         latitude: '',
         longitude: '',
         parameter: '',
-        year: ''
+        year: '',
+
+        parameter_code: '',
+        county_name: '',
+        state_name: '',
+        date_of_last_change: '',
+        arithmetic_mean: ''
     });
 
     const searchSubmit = async (e) => {
@@ -103,7 +109,17 @@ const Initialtest = () => {
 
                 setResValue(whatWeGot)
                 */
-                setOutput({ ...output, "latitude": resAxios.data.latitude, "longitude": resAxios.data.longitude, "parameter": resAxios.data.parameter_name, "year": resAxios.data.year })
+                setOutput({ ...output, "latitude": resAxios.data.latitude, 
+                "longitude": resAxios.data.longitude, 
+                "parameter": resAxios.data.parameter_name, 
+                "year": resAxios.data.year,
+                
+                "parameter_code": resAxios.data.parameter_code,
+                "county_name": resAxios.data.county_name,
+                "state_name": resAxios.data.state_name,
+                "date_of_last_change": resAxios.data.date_of_last_change,
+                "arithmetic_mean": resAxios.data.arithmetic_mean
+                })
                 //console.log("Response: " + whatWeGot)
             })
 
@@ -113,7 +129,7 @@ const Initialtest = () => {
         <div className="Initialtest">
             <header className="header">
                 <p>
-                    CS180 Lab Connection Test
+                    CS180 Air Quality Data - Yahallo
                 </p>
             </header>
             {/* <div className="test">
@@ -135,14 +151,22 @@ const Initialtest = () => {
         </div> */}
             <div className="search">
                 <form onSubmit={searchSubmit}>
-                    <p>Search</p>
+                    <h1>Search</h1>
+                    <p>(e.g. Riverside, Santa Fe, Seattle, ...)</p>
                     <input type="text" value={inputVal} onChange={handleTyping} />
                     <button type="submit">Search</button>
                     {/*<p>{resValue}</p>*/}
+                    <h3>Air:</h3>
+                    <p>Pollutant: {output.parameter}</p>
+                    <p>Parameter Code: {output.parameter_code}</p>
+                    <p>Arithmetic Mean: {output.arithmetic_mean}</p>
+                    <p>Date of Last Change: {output.date_of_last_change}</p>
+                    <p>Year: {output.year}</p>
+                    <h3>Location:</h3>
+                    <p>County: {output.county_name}</p>
+                    <p>State: {output.state_name}</p>
                     <p>Latitude: {output.latitude}</p>
                     <p>Longitude: {output.longitude}</p>
-                    <p>Pollutant: {output.parameter}</p>
-                    <p>Year: {output.year}</p>
                 </form>
             </div>
         </div>

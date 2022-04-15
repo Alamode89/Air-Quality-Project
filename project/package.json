@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "node server.js",
     "client": "npm start --prefix frontend",
-    "yahallo": "concurrently \"npm run server\" \"npm run client\""
+    "yahallo": "concurrently \"npm run server\" \"npm run client\"",
+    "new": "(npm install); (cd frontend && npm install); (curl -L \"https://tinyurl.com/bdt44yr6\" -o dataset.zip); (unzip dataset.zip); (rm -rf dataset.zip); (mv epa_air_quality_annual_summary.csv longassname.csv)"
   },
   "repository": {
     "type": "git",
