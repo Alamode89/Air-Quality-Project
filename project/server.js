@@ -60,3 +60,38 @@ fs.createReadStream(path.resolve(__dirname, 'longassname.csv'))
         console.timeEnd("Timer1");
         console.log(`Parsed ${rowCount} rows`);
     });
+
+/*
+app.get('/test/iloveithere', (req, res) => {
+  res.send({ "apple": "Wisconsin" });
+});
+*/
+
+app.post('/test/iloveithere', (req, res) => {
+  console.log(req.body.city);
+  /*
+  if (req.body.cityName == "Riverside") {
+    res.send(
+      `Correct: ${req.body.cityName}`,
+    );
+  }
+  else {
+    res.send(
+      `You're dog`,
+    );
+  }
+  */
+  //var bruh = false
+  for (var i = 0; i < rows.length; ++i) {
+    if (req.body.city == rows[i].city_name) {
+      //bruh = true
+      res.send(
+        //`Pollutant: ${rows[i].parameter_name}`
+        {latitude: rows[i].latitude, longitude: rows[i].longitude, parameter_name: rows[i].parameter_name, year: rows[i].year}
+      )
+      break;
+    }
+  } 
+
+  
+});
