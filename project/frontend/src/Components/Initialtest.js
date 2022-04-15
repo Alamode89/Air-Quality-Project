@@ -67,55 +67,44 @@ class Initialtest extends Component {
 
     //}
     render() {
-        return ( <
-            div className = "Initialtest" >
-            <
-            header className = "header" >
-            <
-            p >
-            CS180 Lab Connection Test <
-            /p> <
-            /header> <
-            p >
-            <
-            em > Server POST Message: < /em> {this.state.response} <
-            /p> <
-            form onSubmit = { this.handleSubmit } >
-            <
-            p >
-            <
-            strong > Post to Server: < /strong> <
-            /p> <
-            input type = "text"
-            value = { this.state.post }
-            onChange = {
-                (e) => this.setState({ post: e.target.value }) }
-            /> <
-            select value = { this.state.choice }
-            onChange = {
-                (e) => {
-                    this.setState({ choice: e.target.value });
-                }
-            } >
-            <
-            option key = { "empty" }
-            value = "" >
-            Please Select a Filter <
-            /option> {
-                this.state.filters.map((name, index) => ( <
-                    option key = { index }
-                    value = { index } > { name } <
-                    /option>
-                ))
-            } <
-            /select> <
-            button type = "submit" > Submit < /button> <
-            /form> <
-            p >
-            <
-            em > Server GET Message: < /em> {this.state.responseToPost} <
-            /p> <
-            /div>
+        return (
+	<div className="Initialtest">
+        <header className="header">
+          <p>CS180 Lab Connection Test</p>
+        </header>
+        <p>
+          <em>Server POST Message:</em> {this.state.response}
+        </p>
+        <form onSubmit={this.handleSubmit}>
+          <p>
+            <strong>Post to Server:</strong>
+          </p>
+          <input
+            type="text"
+            value={this.state.post}
+            onChange={(e) => this.setState({ post: e.target.value })}
+          />
+          <select
+            value={this.state.choice}
+            onChange={(e) => {
+              this.setState({ choice: e.target.value });
+            }}
+          >
+            <option key={"empty"} value="">
+              Please Select a Filter
+            </option>
+            {this.state.filters.map((name, index) => (
+              <option key={index} value={index}>
+                {name}
+              </option>
+            ))}
+          </select>
+          <button type="submit">Submit</button>
+        </form>
+        <p>
+          <em>Server GET Message:</em> {this.state.responseToPost}
+        </p>
+      </div>
         );
     }
 }
