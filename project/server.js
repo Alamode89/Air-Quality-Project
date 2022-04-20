@@ -67,6 +67,20 @@ app.get('/test/iloveithere', (req, res) => {
 });
 */
 
+app.post('/test/despair', (req, res) => {
+  console.log('Trying to create a backup');
+  const fileName = 'imhelping.csv';
+  const csvFile = fs.createWriteStream(fileName);
+  const stream = format({ headers: false});
+  let randoms = [];
+  stream.pipe(csvFile);
+  for( var i = 0; i < rows.length; ++i) {
+	  stream.write(rows[i]);
+  }
+  stream.end();
+  console.log('Successfully created a backup');
+});
+
 app.post('/test/iloveithere', (req, res) => {
   console.log(req.body.city);
   /*
@@ -101,7 +115,19 @@ app.post('/test/iloveithere', (req, res) => {
       )
       break;
     }
-  } 
+  }
+});
 
-  
+const { format } = require('@fast-csv/format');
+app.post('/test/despair', (req, res) => {
+  console.log('Trying to create a backup');
+  const fileName = 'imhelping.csv';
+  const csvFile = fs.createWriteStream(fileName);
+  let cpy = [];
+  stream.pipe(csvFile);
+  for( var i = 0; i < rows.length; ++i) {
+	  stream.write(rows[i]);
+  }
+  stream.end();
+  console.log('Successfully created a backup');
 });

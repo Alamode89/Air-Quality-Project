@@ -125,6 +125,12 @@ const Initialtest = () => {
 
     }
 
+    const backup = async (e) => {
+	    let whatisthis = { city: inputVal }
+	    console.log("Creating Backup")
+	    axios.post('/test/despair', whatisthis) 
+    }
+
     return (
         <div className="Initialtest">
             <header className="header">
@@ -169,6 +175,10 @@ const Initialtest = () => {
                     <p>Longitude: {output.longitude}</p>
                 </form>
             </div>
+	    <div>
+	    	<button onClick={backup}>Backup</button>
+	    </div>
+
         </div>
     );
 }
