@@ -18,6 +18,6 @@ Node.js / Express.js
 
 [cd project]
 
-[npm run new] (installs required modules && downloads csv (via curl))
+[npm run new] (installs required modules && downloads csv (via gdown))
 
 [npm run yahallo] (starts front/back end simultaneously)
