@@ -1,10 +1,10 @@
 import './App.css';
-import Initialtest from './Components/Initialtest';
+import AirQuality from './Components/AirQuality';
 
 function App() {
   return (
     <div className="App">
-      <Initialtest />
+      <AirQuality />
     </div>
   );
 }
