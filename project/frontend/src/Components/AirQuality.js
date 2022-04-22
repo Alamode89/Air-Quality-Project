@@ -241,7 +241,49 @@ const AirQuality = () => {
 		e.preventDefault()
 		axios.get('/api/backup')
 	}
+    //-----------------------Import---------------------------------
+    const [handleInput, setHandleInput] = useState({
+        fileName:''
+    });
 
+    const handleImport = (e) => {
+        console.log("INPUT: " + e.target.value)
+        e.preventDefault();
+        /*
+        setCreateInput({ ...createInput,
+            "newCity": e.target.newCity,
+            "newPollutant": e.target.newPollutant,
+            "newMetric": e.target.newMetric,
+            "newObsCount": e.target.newObsCount,
+            "newArithMean": e.target.newArithMean,
+            "newArithSTDev": e.target.newArithSTDev,
+            "newYear": e.target.newYear,
+            "newCounty": e.target.newCounty,
+            "newState": e.target.newState,
+            "newLatitude": e.target.newLatitude,
+            "newLongitude": e.target.newLongitude
+        })*/
+        //we defined "variable names" in name="" down below, so now just call name when THAT field is touched GENIUS
+        setHandleInput({ ...handleInput, "fileName": e.target.value})
+    }
+
+    const importSubmit = async (e) => {
+        // read ALL the data when searching for a single element
+        e.preventDefault()
+        console.log("fileName" + handleInput.fileName)
+        //setResValue("")
+        var obj  = {
+            "filename": handleInput.fileName
+        } 
+        axios.post('/api/import/csv', obj)
+            .then(resAxios => {
+                console.log("Status: " + JSON.stringify(resAxios.data))
+            })
+            .catch(err => {
+                alert("ERROR:" + err)
+            })
+
+    }
     //------------------------HTML----------------------------------
     return (
         <div className="AirQuality">
@@ -320,6 +362,14 @@ const AirQuality = () => {
                         <p>2. Please enter new data for the field:</p>
                         <input type="text" value={updateUser.userInput} onChange={handleUpdateUser}></input>
                         <button type="submit">Update</button>                  
+                </form>
+            </div>
+            <div className="import">
+                <form onSubmit={importSubmit}>
+                    <h1>import</h1>
+                    <p>(Must fill all values.)</p>
+                    <h3>fileName: <input type="text" value={handleInput.fileName} onChange={handleImport} /></h3>
+                    <button type="submit">Submit</button>
                 </form>
             </div>
 
