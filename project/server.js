@@ -6,10 +6,8 @@ const deleteEntry = require("./utility/deleteEntry");
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-var fs = require("fs");
 const path = require("path");
 const port = process.env.PORT || 1337;
-const { parse } = require("fast-csv");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -75,22 +73,8 @@ app.post('/api/search', (req, res) => {
 });
 //API to fetch filename and return file data of that scpecific file
 app.post("/api/import/csv", async(req, res) => {
-    console.log(req.body);
-    const result = [];
-    await fs
-        .createReadStream(path.resolve(`./${req.body.filename}.csv`))
-        .pipe(parse({ maxRows: 50 }))
-        .on("error", (error) => console.error({ error }))
-        .on("data", (row) => {
-            console.log({ row });
-            result.push(row);
-        })
-        .on("end", (rowCount) => {
-            console.timeEnd("Timer1");
-            res.send({ result });
-
-            console.log(`Parsed ${rowCount} rows`);
-        });
+    rows = parsecsv.readCSVFile(req.body.filename);
+    res.send("Success")
 });
 
 
