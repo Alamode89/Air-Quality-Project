@@ -4,6 +4,8 @@ const search = require("./utility/search");
 const deleteEntry = require("./utility/deleteEntry");
 const create = require("./utility/create")
 const update = require("./utility/update")
+const backup = require("./utility/backup")
+
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -106,5 +108,9 @@ app.post('/api/update', (req, res) => {
   }
 
 })
+
+app.get('/api/backup', (req, res) => {
+	backup.createBackup('backupCSV.csv', rows);
+});
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

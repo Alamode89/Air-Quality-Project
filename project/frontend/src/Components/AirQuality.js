@@ -236,6 +236,12 @@ const AirQuality = () => {
 
     }
 
+    //-----------------------Backup---------------------------------
+	const backup = async (e) => {
+		e.preventDefault()
+		axios.get('/api/backup')
+	}
+
     //------------------------HTML----------------------------------
     return (
         <div className="AirQuality">
@@ -268,6 +274,9 @@ const AirQuality = () => {
                 <form onSubmit={deleteSubmit}>
                     <button type="submit">Delete Entry.</button>
                 </form>
+	        <form onSubmit={backup}>
+	    	    <button type="submit">Backup</button>
+	        </form>
             </div>
 
             <div className="create">
