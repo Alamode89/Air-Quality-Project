@@ -5,7 +5,7 @@ function deleteEntry(searchStatus, userHasSearched, rows) {
     if(userHasSearched) {
         console.log(`Attempting to delete entry ${rows[searchStatus.index].city_name}, ${rows[searchStatus.index].parameter_name}, ${rows[searchStatus.index].year}`);
         rows.splice(searchStatus.index, 1);
-        console.log(`Check if deleted, following entry should be different from above: ${rows[searchStatus.index].city_name}, ${rows[searchStatus.index].parameter_name}, ${rows[searchStatus.index].year}`);
+        //console.log(`Check if deleted, following entry should be different from above: ${rows[searchStatus.index].city_name}, ${rows[searchStatus.index].parameter_name}, ${rows[searchStatus.index].year}`);
     } else {
         console.log(`User has not searched yet, please search before attempting to delete`);
     }

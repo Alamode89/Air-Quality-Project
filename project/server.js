@@ -2,6 +2,7 @@
 const parse = require("./utility/parseCSV");
 const search = require("./utility/search");
 const deleteEntry = require("./utility/deleteEntry");
+const create = require("./utility/create")
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -72,6 +73,18 @@ app.post('/api/search', (req, res) => {
 
 });
 
+app.post('/api/create', (req, res) => {
+  var tempEntry = create.createEntry(req);
+  console.log("Create Result: " + tempEntry)
+  if (tempEntry.length == 0) {
+    res.send({status: "failed"})
+  }
+  else {
+    rows.push(tempEntry);
+    res.send({status: "success"})
+  }
+  //console.log("Array size: " + rows.length)
+});
 
 
 
