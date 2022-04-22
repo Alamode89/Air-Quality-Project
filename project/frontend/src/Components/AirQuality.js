@@ -1,6 +1,7 @@
 //ES7+ React/Redux ... Search "React" in VSCode Extensions -> Type rafce in blank js file
 import axios from 'axios';
 import React, { useState, useEffect, Component } from 'react';
+import logo from '../favicon.png';
 import './AirQuality.css'
 
 const AirQuality = () => {
@@ -288,16 +289,17 @@ const AirQuality = () => {
     return (
         <div className="AirQuality">
             <header className="header">
-                <p>
-                    CS180 Air Quality Data - Yahallo
-                </p>
+                <h2>
+                    Air Quality Interactive
+                </h2>
             </header>
+
             <div className="search">
                 <form onSubmit={searchSubmit}>
                     <h1>Search</h1>
                     <p>(e.g. Riverside, Santa Fe, Seattle, ...)</p>
                     <input type="text" value={inputVal} onChange={handleTyping} />
-                    <button type="submit">Search</button>
+                    <button className='btn' type="submit">Search</button>
                     {/*<p>{resValue}</p>*/}
                     <h3>City: {search.city_name}</h3>
                     <h3><u>Air</u></h3>
@@ -313,14 +315,18 @@ const AirQuality = () => {
                     <p><em>Latitude:</em> {search.latitude}</p>
                     <p><em>Longitude:</em> {search.longitude}</p>
                 </form>
-                <form onSubmit={deleteSubmit}>
-                    <button type="submit">Delete Entry.</button>
-                </form>
-	        <form onSubmit={backup}>
-	    	    <button type="submit">Backup</button>
-	        </form>
             </div>
-
+            <div className="FileOperation">
+                <h1>
+                    File Operations
+                </h1>
+                <form onSubmit={deleteSubmit}>
+                        <button className='btn' type="submit">Delete Entry.</button>
+                    </form>
+                <form onSubmit={backup}>
+                    <button className='btn' type="submit">Backup</button>
+                </form>
+            </div>
             <div className="create">
                 <form onSubmit={createSubmit}>
                     <h1>Create a New Entry/Row</h1>
@@ -338,7 +344,7 @@ const AirQuality = () => {
                     <p><em>State:</em> <input type="text" name="newState" value={createInput.newState} onChange={handleCreate} /></p>
                     <p><em>Latitude:</em> <input type="text" name="newLatitude" value={createInput.newLatitude} onChange={handleCreate} /></p>
                     <p><em>Longitude:</em> <input type="text" name="newLongitude" value={createInput.newLongitude} onChange={handleCreate} /></p>
-                    <button type="submit">Submit</button>
+                    <button className='btn' type="submit">Submit</button>
                 </form>
             </div>
 
@@ -361,18 +367,22 @@ const AirQuality = () => {
                         </select>
                         <p>2. Please enter new data for the field:</p>
                         <input type="text" value={updateUser.userInput} onChange={handleUpdateUser}></input>
-                        <button type="submit">Update</button>                  
+                        <button className='btn' type="submit">Update</button>                  
                 </form>
             </div>
             <div className="import">
                 <form onSubmit={importSubmit}>
-                    <h1>import</h1>
+                    <h1>Import</h1>
                     <p>(Must fill all values.)</p>
                     <h3>fileName: <input type="text" value={handleInput.fileName} onChange={handleImport} /></h3>
-                    <button type="submit">Submit</button>
+                    <button className='btn' type="submit">Submit</button>
                 </form>
             </div>
-
+            <div className='blank'></div>
+            <div className='footer'>
+                <p>by yours truly, Yahallo Inc.</p>
+                <img className="logo" src={logo} alt="logo" />
+            </div>
         </div>
     );
 }
