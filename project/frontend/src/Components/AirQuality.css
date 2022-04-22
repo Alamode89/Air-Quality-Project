@@ -1,15 +1,230 @@
+*{
+  font-family: 'Roboto', sans-serif;
+}
+
 .AirQuality {
-  text-align: center;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  
 }
 
 .header {
-  background-color: #282c34;
+  background-color: white;
   min-height: 50%;
+  width: 65%;
+  
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-top: 10px;
+  
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: black;
   padding-bottom: 10px;
+
+  border: 2px solid #ef626c;
+  padding: 10px;
+  box-shadow: 5px 10px #ef626c;
+}
+
+.search {
+  color: black;
+  width: 50%;
+  border: 2px solid #90DBF4;
+  margin-top: 20px;
+
+  padding: 10px;
+  box-shadow: 5px 10px #90DBF4;
+}
+
+.search input {
+  border-radius: 10px;
+  width: 15rem;
+}
+.search button {
+  border-radius: 10px;
+  background-color: white;
+  color:black;
+  border: 2px solid black;
+  font-size: 0.8rem;
+
+  padding:.15em .6rem;
+  margin-left: 10px;
+  
+}
+
+.create {
+  color: black;
+  width: 50%;
+  border: 2px solid #FBF8CC;
+  margin-top: 20px;
+
+  padding: 10px;
+  box-shadow: 5px 10px #FBF8CC;
+}
+
+.create input {
+  border-radius: 10px;
+  width: 15rem;
+}
+.create button {
+  border-radius: 10px;
+  background-color: white;
+  color:black;
+  border: 2px solid black;
+  font-size: 0.8rem;
+
+  padding:.15em .6rem;
+  margin-left: 10px;
+  
+}
+
+
+.update {
+  color: black;
+  width: 50%;
+  border: 2px solid #FDE4CF;
+  margin-top: 20px;
+
+  padding: 10px;
+  box-shadow: 5px 10px #FDE4CF;
+}
+
+.update input {
+  border-radius: 10px;
+  width: 15rem;
+}
+.update button {
+  border-radius: 10px;
+  background-color: white;
+  color:black;
+  border: 2px solid black;
+  font-size: 0.8rem;
+
+  padding:.15em .6rem;
+  margin-left: 10px;
+  
+}
+
+
+.import {
+  color: black;
+  width: 50%;
+  border: 2px solid #FFCFD2;
+  margin-top: 20px;
+
+  padding: 10px;
+  box-shadow: 5px 10px #FFCFD2;
+}
+
+.import input {
+  border-radius: 10px;
+  width: 15rem;
+}
+.import button {
+  border-radius: 10px;
+  background-color: white;
+  color:black;
+  border: 2px solid black;
+  font-size: 0.8rem;
+
+  padding:.15em .6rem;
+  margin-left: 10px;
+  
+}
+
+.FileOperation {
+  justify-content: space-between;
+  color: black;
+  width: 50%;
+  border: 2px solid #F1C0E8;
+  margin-top: 20px;
+
+  padding: 10px;
+  box-shadow: 5px 10px #F1C0E8;
+}
+
+.FileOperation input {
+  border-radius: 10px;
+  width: 15rem;
+}
+.FileOperation button {
+  border-radius: 10px;
+  background-color: white;
+  color:black;
+  border: 2px solid black;
+  font-size: 0.8rem;
+
+  padding:.15em .6rem;
+  margin-left: 10px;
+  
+}
+
+.btn:active {
+  transform: translateY(9px) translateX(9px);
+}
+.btn:focus {
+  outline: none;
+}
+/* colors 
+FBF8CC
+FDE4CF
+FFCFD2
+F1C0E8
+CFBAF0
+A3C4F3
+8EECF5
+98F5E1
+B9FBC0
+
+90DBF4
+*/
+  /* margin -> border -> padding -> content*/
+.blank {
+  height: 300px;
+  /*
+  border: 2px solid #90DBF4;
+  */
+  width: 50%;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  height: 45px;
+  bottom: 0;
+  width: 100%;
+  background-color: #A3C4F3;
+  color: white;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  width: 41.78px;
+  height: 40px;
+  position: absolute;
+  bottom: 2px;
+  left: 10px;
+  border-radius: 50%;
+}
+
+
+.footer img {
+  animation: rotation 5s infinite linear;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
 }
