@@ -42,7 +42,7 @@ function updateCity(req, rows, searchStatus) {
         tempIndex = 9;
         tempStr = req.body.county_name;
     }
-    else if(req.body.type == "observation_count") {
+    else if(req.body.type == "city_name") {
         tempIndex = 10;
         tempStr = req.body.city_name;
     }
