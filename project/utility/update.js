@@ -7,12 +7,16 @@ function updateCity(req, rows, searchStatus) {
     var status = false;
 
     if(req.body.type == "latitude") {
-        tempIndex = 1;
+        tempIndex = 0;
         tempStr = req.body.latitude;
     }
     else if(req.body.type == "longitude") {
-        tempIndex = 2;
+        tempIndex = 1;
         tempStr = req.body.longitude;
+    }
+    else if(req.body.type == "parameter_name") {
+        tempIndex = 2;
+        tempStr = req.body.parameter_name;
     }
     else if(req.body.type == "metric_used") {
         tempIndex = 3;
