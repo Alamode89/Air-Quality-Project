@@ -91,6 +91,9 @@ const AirQuality = () => {
 
     }
 
+
+    //------------------------Delete----------------------------------
+
     const deleteSubmit = async (e) => {
         // read all the data when searching for single element
         e.preventDefault()
@@ -102,6 +105,71 @@ const AirQuality = () => {
             .catch(err => {
                 alert("ERROR:" + err)
             })
+    }
+
+    //------------------------Create----------------------------------
+    const [createInput, setCreateInput] = useState({
+        newCity: '',
+        newPollutant: '',
+        newMetric: '',
+        newObsCount: '',
+        newArithMean: '',
+        newArithSTDev: '',
+        newYear: '',
+        newCounty: '',
+        newState: '',
+        newLatitude: '',
+        newLongitude: ''
+
+    });
+
+    const handleCreate = (e) => {
+        console.log("INPUT: " + e.target.name)
+        /*
+        setCreateInput({ ...createInput,
+            "newCity": e.target.newCity,
+            "newPollutant": e.target.newPollutant,
+            "newMetric": e.target.newMetric,
+            "newObsCount": e.target.newObsCount,
+            "newArithMean": e.target.newArithMean,
+            "newArithSTDev": e.target.newArithSTDev,
+            "newYear": e.target.newYear,
+            "newCounty": e.target.newCounty,
+            "newState": e.target.newState,
+            "newLatitude": e.target.newLatitude,
+            "newLongitude": e.target.newLongitude
+        })*/
+        //we defined "variable names" in name="" down below, so now just call name when THAT field is touched GENIUS
+        setCreateInput({ ...createInput, [e.target.name]: e.target.value})
+    }
+
+    const createSubmit = async (e) => {
+        // read ALL the data when searching for a single element
+        e.preventDefault()
+        //setResValue("")
+        let createPayload = { 
+            latitude: createInput.newLatitude, 
+            longitude: createInput.newLongitude, 
+            parameter_name: createInput.newPollutant, 
+            metric_used: createInput.newMetric,
+            year: createInput.newYear,
+            observation_count: createInput.newObsCount,
+            arithmetic_mean: createInput.newArithMean,
+            arithmetic_standard_dev: createInput.newArithSTDev,
+            state_name: createInput.newState,
+            county_name: createInput.newCounty,
+            city_name: createInput.newCity
+        }
+        console.log("we have" + createInput.newCity)
+        console.log("We're sending" + JSON.stringify(createPayload))
+        axios.post('/api/create', createPayload)
+            .then(resAxios => {
+                console.log("Status: " + JSON.stringify(resAxios.data.status))
+            })
+            .catch(err => {
+                alert("ERROR:" + err)
+            })
+
     }
 
     //------------------------HTML----------------------------------
@@ -137,6 +205,28 @@ const AirQuality = () => {
                     <button type="submit">Delete Entry.</button>
                 </form>
             </div>
+
+            <div className="create">
+                <form onSubmit={createSubmit}>
+                    <h1>Create a New Entry/Row</h1>
+                    <p>(Must fill all values.)</p>
+                    <h3>City: <input type="text" name="newCity" value={createInput.newCity} onChange={handleCreate} /></h3>
+                    <h3><u>Air</u></h3>
+                    <p><em>Pollutant:</em> <input type="text" name="newPollutant" value={createInput.newPollutant} onChange={handleCreate} /></p>
+                    <p><em>Metric:</em> <input type="text" name="newMetric" value={createInput.newMetric} onChange={handleCreate} /></p>
+                    <p><em>Observation Count:</em> <input type="text" name="newObsCount" value={createInput.newObsCount} onChange={handleCreate} /></p>
+                    <p><em>Arithmetic Mean:</em> <input type="text" name="newArithMean" value={createInput.newArithMean} onChange={handleCreate} /></p>
+                    <p><em>Arithmetic Standard Deviation:</em> <input type="text" name="newArithSTDev" value={createInput.newArithSTDev} onChange={handleCreate} /></p>
+                    <p><em>Year:</em> <input type="text" name="newYear" value={createInput.newYear} onChange={handleCreate} /></p>
+                    <h3><u>Location</u></h3>
+                    <p><em>County:</em> <input type="text" name="newCounty" value={createInput.newCounty} onChange={handleCreate} /></p>
+                    <p><em>State:</em> <input type="text" name="newState" value={createInput.newState} onChange={handleCreate} /></p>
+                    <p><em>Latitude:</em> <input type="text" name="newLatitude" value={createInput.newLatitude} onChange={handleCreate} /></p>
+                    <p><em>Longitude:</em> <input type="text" name="newLongitude" value={createInput.newLongitude} onChange={handleCreate} /></p>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+
         </div>
     );
 }
