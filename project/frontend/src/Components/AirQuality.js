@@ -1,7 +1,11 @@
 //ES7+ React/Redux ... Search "React" in VSCode Extensions -> Type rafce in blank js file
 import axios from 'axios';
 import React, { useState, useEffect, Component } from 'react';
+// material UI is used for some styling
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 import './AirQuality.css'
+
 
 const AirQuality = () => {
     //------------------------Testing----------------------------------
@@ -15,10 +19,10 @@ const AirQuality = () => {
         callApi()
     }, []);
 
-    const callApi = async () => {
+    const callApi = async() => {
         return axios.get('/test/get')
             .then(resAxios => {
-                setData({ ...data, "response": resAxios.data.express })
+                setData({...data, "response": resAxios.data.express })
                 console.log("MESSAGE: " + resAxios.data.express)
             })
             .catch(err => {
@@ -32,7 +36,7 @@ const AirQuality = () => {
         console.log("Send: " + res)
         axios.post('/test/post', res)
             .then(resAxios => {
-                setData({ ...data, "responseToPost": resAxios.data })
+                setData({...data, "responseToPost": resAxios.data })
                 console.log("Response: " + resAxios.data)
             })
     };
@@ -40,89 +44,141 @@ const AirQuality = () => {
     //------------------------Input----------------------------------
 
     const [inputVal, setInputVal] = useState("");
+    const [info, setInfo] = useState({});
+    const [resValue, setResValue] = useState("");
 
     const handleTyping = (e) => {
-        setInputVal(e.target.value)
-        console.log(inputVal)
-    }
+        setInputVal(e.target.value);
+        console.log(inputVal);
+    };
 
     //------------------------Search----------------------------------
 
-    const [search, setSearch] = useState({
-        latitude: '',
-        longitude: '',
-        parameter: '',
-        metric: '',
-        year: '',
-        observation_cnt: '',
-        arithmetic_mean: '',
-        arithmetic_stdDev: '',
-        county_name: '',
-        state_name: '',
-        city_name: ''
+    const [output, setOutput] = useState({
+        latitude: "",
+        longitude: "",
+        parameter: "",
+        year: "",
+
+        parameter_code: "",
+        county_name: "",
+        state_name: "",
+        date_of_last_change: "",
+        arithmetic_mean: "",
     });
 
-    const searchSubmit = async (e) => {
+
+    const searchSubmit = async(e) => {
         // read ALL the data when searching for a single element
         e.preventDefault()
-        //setResValue("")
+            //setResValue("")
         let incoming = { city: inputVal }
-        console.log("Our input: " + incoming.city)
-        axios.post('/api/search', incoming)
-            .then(resAxios => {
-                console.log("Incoming Data: " + JSON.stringify(resAxios.data))
-                setSearch({ ...search, 
-                    "latitude": resAxios.data.latitude,
-                    "longitude": resAxios.data.longitude,
-                    "parameter": resAxios.data.parameter_name,
-                    "metric": resAxios.data.metric_used,
-                    "year": resAxios.data.year,
-                    "observation_cnt": resAxios.data.observation_count,
-                    "arithmetic_mean": resAxios.data.arithmetic_mean,
-                    "arithmetic_stdDev": resAxios.data.arithmetic_standard_dev,
-                    "county_name": resAxios.data.county_name,
-                    "state_name": resAxios.data.state_name,
-                    "city_name": resAxios.data.city_name
-                })
-            })
-            .catch(err => {
-                alert("ERROR:" + err)
-            })
+        console.log("Our input: " + incoming)
+        axios.post('/api/search', incoming).then(resAxios => {
+            console.log("Incoming Data: " + JSON.stringify(resAxios.data));
+            //changing the setoutput
+            setOutput({
+                ...output,
+                latitude: resAxios.data.latitude,
+                longitude: resAxios.data.longitude,
+                parameter: resAxios.data.parameter_name,
+                year: resAxios.data.year,
 
-    }
+                parameter_code: resAxios.data.parameter_code,
+                county_name: resAxios.data.county_name,
+                state_name: resAxios.data.state_name,
+                date_of_last_change: resAxios.data.date_of_last_change,
+                arithmetic_mean: resAxios.data.arithmetic_mean,
+            });
+            //console.log("Response: " + whatWeGot)
+        });
+    };
 
     //------------------------HTML----------------------------------
-    return (
-        <div className="AirQuality">
-            <header className="header">
-                <p>
-                    CS180 Air Quality Data - Yahallo
-                </p>
-            </header>
-            <div className="search">
-                <form onSubmit={searchSubmit}>
-                    <h1>Search</h1>
-                    <p>(e.g. Riverside, Santa Fe, Seattle, ...)</p>
-                    <input type="text" value={inputVal} onChange={handleTyping} />
-                    <button type="submit">Search</button>
-                    {/*<p>{resValue}</p>*/}
-                    <h3>City: {search.city_name}</h3>
-                    <h3><u>Air</u></h3>
-                    <p><em>Pollutant:</em> {search.parameter}</p>
-                    <p><em>Metric:</em> {search.metric}</p>
-                    <p><em>Arithmetic Mean:</em> {search.arithmetic_mean}</p>
-                    <p><em>Arithmetic Standard Deviation:</em> {search.arithmetic_stdDev}</p>
-                    <p><em>Year:</em> {search.year}</p>
-                    <h3><u>Location</u></h3>
-                    <p><em>County:</em> {search.county_name}</p>
-                    <p><em>State:</em> {search.state_name}</p>
-                    <p><em>Latitude:</em> {search.latitude}</p>
-                    <p><em>Longitude:</em> {search.longitude}</p>
-                </form>
-            </div>
-        </div>
-    );
-}
+  return (
+    <div className="AirQuality">
+          <div className="search">
+        <form onSubmit={searchSubmit}>
+          <h1>Search</h1>
+          <p>(e.g. Riverside, Santa Fe, Seattle, ...)</p>
+          <div className="import-div">
+            <TextField
+              id="outlined-basic"
+              label="Search"
+              variant="outlined"
+              onChange={(e) => handleTyping(e)}
+            />
+
+            <span style={{ marginLeft: "8px" }}>
+              <Button
+                variant="contained"
+                size="large"
+                type="submit"
+                style={{ height: "53px" }}
+              >
+                Search
+              </Button>
+            </span>
+          </div>
+
+          {/* <button type="submit">Search</button> */}
+
+          {/*<p>{resValue}</p>*/}
+          <h2>Air</h2>
+          <div
+            style={{ width: "100%", display: "flex", justifyContent: "center" }}
+          >
+            <ol>
+              <li class="">
+                <a>Pollutant: {output.parameter}</a>
+              </li>
+              <li class="">
+                <a>Parameter Code: {output.parameter_code}</a>
+              </li>
+              <li class="">
+                <a>Arithmetic Mean: {output.arithmetic_mean}</a>
+              </li>
+              <li class="">
+                <a>Date of Last Change: {output.date_of_last_change}</a>
+              </li>
+              <li class="">
+                <a>Year: {output.year}</a>
+              </li>
+            </ol>
+          </div>
+          {/* <p>Pollutant: {output.parameter}</p>
+                    <p>Parameter Code: {output.parameter_code}</p>
+                    <p>Arithmetic Mean: {output.arithmetic_mean}</p>
+                    <p>Date of Last Change: {output.date_of_last_change}</p>
+                    <p>Year: {output.year}</p> */}
+          <h2>Location</h2>
+          <div
+            style={{ width: "100%", display: "flex", justifyContent: "center" }}
+          >
+            <ol>
+              <li class="">
+                <a>County: {output.county_name}</a>
+              </li>
+              <li class="">
+                <a>State: {output.state_name}</a>
+              </li>
+              <li class="">
+                <a>Latitude: {output.latitude}</a>
+              </li>
+              <li class="">
+                <a>Longitude: {output.longitude}</a>
+              </li>
+            </ol>
+          </div>
+          {/* <p>County: {output.county_name}</p>
+                    <p>State: {output.state_name}</p>
+                    <p>Latitude: {output.latitude}</p>
+                    <p>Longitude: {output.longitude}</p> */}
+        </form>
+      </div>
+    </div>
+  );
+};
 
 export default AirQuality
 

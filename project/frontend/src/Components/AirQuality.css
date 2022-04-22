@@ -1,15 +1,89 @@
 .AirQuality {
-  text-align: center;
+    text-align: center;
 }
 
 .header {
-  background-color: #282c34;
-  min-height: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-  padding-bottom: 10px;
+    background-color: #282c34;
+    min-height: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+    padding-bottom: 10px;
+}
+
+.import-div {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.initial-search-field {
+    height: 40px;
+    width: 18%;
+    font-size: 20px;
+    border: 1px solid #575757;
+    border-radius: 2px;
+}
+
+ol {
+    width: 30%;
+    align-items: center;
+    counter-reset: li;
+    list-style: none;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, .5);
+}
+
+ol a {
+    position: relative;
+    display: block;
+    padding: .4em .4em .4em .8em;
+    margin: .5em 0 .5em 2.5em;
+    background: #D3D4DA;
+    color: #444;
+    text-decoration: none;
+    transition: all .3s ease-out;
+}
+
+ol a:hover {
+    background: #DCDDE1;
+}
+
+ol a:before {
+    content: counter(li);
+    counter-increment: li;
+    position: absolute;
+    left: -2.5em;
+    top: 50%;
+    margin-top: -1em;
+    background: #f9dd94;
+    height: 2em;
+    width: 2em;
+    line-height: 2em;
+    text-align: center;
+    font-weight: bold;
+}
+
+ol a:after {
+    position: absolute;
+    content: "";
+    border: .5em solid transparent;
+    left: -1em;
+    top: 50%;
+    margin-top: -.5em;
+    transition: all .3s ease-out;
+}
+
+ol a:hover:after {
+    left: -.5em;
+    border-left-color: #f9dd94;
+}
+
+.inputStyle {
+    align-items: center;
+    background-color: red;
 }

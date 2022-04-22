@@ -17,6 +17,9 @@
   "author": "Andre Amante, Kobe Braga, Roy Feng, Joseph Tham, Abanob Wahba",
   "license": "ISC",
   "dependencies": {
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
+    "@mui/material": "^5.6.2",
     "body-parser": "^1.20.0",
     "concurrently": "^7.1.0",
     "csv-writer": "^1.6.0",
