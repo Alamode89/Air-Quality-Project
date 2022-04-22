@@ -3,6 +3,7 @@ const parse = require("./utility/parseCSV");
 const search = require("./utility/search");
 const deleteEntry = require("./utility/deleteEntry");
 const create = require("./utility/create")
+const update = require("./utility/update")
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -86,6 +87,24 @@ app.post('/api/create', (req, res) => {
   //console.log("Array size: " + rows.length)
 });
 
+app.post('/api/update', (req, res) => {
+  console.log("updating: " + req.body.type);
+  var serStatus = false;
+  serStatus = update.updateCity(req, rows, searchStatus)
+  
+  if(serStatus == true) {
+    console.log("Update successful!");
+    res.send (
+      "Success"
+    )
+  }
+  else {
+    console.log("Update Failed");
+    res.send (
+      "Failed"
+    )
+  }
 
+})
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

@@ -172,6 +172,70 @@ const AirQuality = () => {
 
     }
 
+           //------------------------Update----------------------------------
+   const [updateInput, setUpdateInput] = useState({
+    updateType: '',
+    updateCity: '',
+    updatePollutant: '',
+    updateMetric: '',
+    updateObsCount: '',
+    updateArithMean: '',
+    updateArithSTDev: '',
+    updateYear: '',
+    updateCounty: '',
+    updateState: '',
+    updateLatitude: '',
+    updateLongitude: ''
+
+    });
+
+    const [updateUser, setUpdateUser] = useState({
+        userInput: ''
+    })
+
+    const handleUpdateUser = (e) => {
+        e.preventDefault()
+        console.log("INPUT: " + e.target.value)
+        setUpdateUser({ ...updateUser, userInput: e.target.value})
+    }
+
+    const handleType = (e) => {
+        e.preventDefault()
+        console.log("INPUT: " + e.target.value)
+        setUpdateInput({ ...updateInput, updateType: [e.target.value]})
+    }
+
+    const updateSubmit = async (e) => {
+        e.preventDefault()
+        let updatePayload = { 
+            type: updateInput.updateType,
+            latitude: updateInput.updateLatitude, 
+            longitude: updateInput.updateLongitude, 
+            parameter_name: updateInput.updatePollutant, 
+            metric_used: updateInput.updateMetric,
+            year: updateInput.updateYear,
+            observation_count: updateInput.updateObsCount,
+            arithmetic_mean: updateInput.updateArithMean,
+            arithmetic_standard_dev: updateInput.updateArithSTDev,
+            state_name: updateInput.updateState,
+            county_name: updateInput.updateCounty,
+            city_name: updateInput.updateCity
+        }
+        console.log("Before || " + updatePayload.type + ": " + updatePayload[updatePayload.type])
+        updatePayload[updatePayload.type] = updateUser.userInput
+        console.log("After || " + updatePayload.type + ": " + updatePayload[updatePayload.type])
+        
+        axios.post('/api/update', updatePayload)
+            .then(resAxios => {
+                console.log("Status: " + JSON.stringify(resAxios.data))
+            })
+            .catch(err => {
+                alert("ERROR:" + err)
+            })
+            
+
+    }
+
     //------------------------HTML----------------------------------
     return (
         <div className="AirQuality">
@@ -224,6 +288,29 @@ const AirQuality = () => {
                     <p><em>Latitude:</em> <input type="text" name="newLatitude" value={createInput.newLatitude} onChange={handleCreate} /></p>
                     <p><em>Longitude:</em> <input type="text" name="newLongitude" value={createInput.newLongitude} onChange={handleCreate} /></p>
                     <button type="submit">Submit</button>
+                </form>
+            </div>
+
+            <div className="update">
+                <form onSubmit={updateSubmit}>
+                    <h1>Update</h1>
+                        <p>1. Please select a field to update:</p>
+                        <select onChange={handleType}>
+                            <option value="city_name">City</option>
+                            <option value="parameter_name">Pollutant</option>
+                            <option value="metric_used">Metric</option>
+                            <option value="observation_count">Observation Count</option>
+                            <option value="arithmetic_mean">Arithmetic Mean</option>
+                            <option value="arithmetic_standard_dev">Arithmetic Standard Deviation</option>
+                            <option value="year">Year</option>
+                            <option value="county_name">County</option>
+                            <option value="state_name">State</option>
+                            <option value="latitude">Latitude</option>
+                            <option value="longitude">Longitude</option>
+                        </select>
+                        <p>2. Please enter new data for the field:</p>
+                        <input type="text" value={updateUser.userInput} onChange={handleUpdateUser}></input>
+                        <button type="submit">Update</button>                  
                 </form>
             </div>
 
