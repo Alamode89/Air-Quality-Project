@@ -91,6 +91,19 @@ const AirQuality = () => {
 
     }
 
+    const deleteSubmit = async (e) => {
+        // read all the data when searching for single element
+        e.preventDefault()
+        //setResValue("")
+        axios.get('/api/delete')
+            .then(resAxios => {
+                console.log("Status: " + JSON.stringify(resAxios.data.status))
+            })
+            .catch(err => {
+                alert("ERROR:" + err)
+            })
+    }
+
     //------------------------HTML----------------------------------
     return (
         <div className="AirQuality">
@@ -110,6 +123,7 @@ const AirQuality = () => {
                     <h3><u>Air</u></h3>
                     <p><em>Pollutant:</em> {search.parameter}</p>
                     <p><em>Metric:</em> {search.metric}</p>
+                    <p><em>Observation Count:</em> {search.observation_cnt}</p>
                     <p><em>Arithmetic Mean:</em> {search.arithmetic_mean}</p>
                     <p><em>Arithmetic Standard Deviation:</em> {search.arithmetic_stdDev}</p>
                     <p><em>Year:</em> {search.year}</p>
@@ -118,6 +132,9 @@ const AirQuality = () => {
                     <p><em>State:</em> {search.state_name}</p>
                     <p><em>Latitude:</em> {search.latitude}</p>
                     <p><em>Longitude:</em> {search.longitude}</p>
+                </form>
+                <form onSubmit={deleteSubmit}>
+                    <button type="submit">Delete Entry.</button>
                 </form>
             </div>
         </div>

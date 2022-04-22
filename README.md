@@ -1,23 +1,25 @@
 # Team "Yahallo" Spring 2022 CS180 Software Construction Project
 
-# Team Members
-Andre Amante,
-Kobe Braga,
-Roy Feng,
-Joseph Tham,
-Abanob Wahba
+### Team Members
+* Andre Amante
+* Kobe Braga
+* Roy Feng
+* Joseph Tham
+* Abanob Wahba
 
-# Dataset: Air Quality
+### Dataset: Air Quality
+* https://www.kaggle.com/epa/air-quality
 
-# Tech Stack (Tentatively)
-React
-Node.js / Express.js
+### Tech Stack (Tentatively)
+* React
+* Node.js
+* Express.js
 
-# How to run
-[cd Air-Quality-Project]
+### How to run
+* [cd Air-Quality-Project]
 
-[cd project]
+* [cd project]
 
-[npm run new] (installs required modules && downloads csv (via gdown))
+* [npm run new] (installs required modules && downloads csv (via gdown))
 
-[npm run yahallo] (starts front/back end simultaneously)
+* [npm run yahallo] (starts front/back end simultaneously)
