@@ -111,7 +111,7 @@ app.get('/api/backup', (req, res) => {
     backup.createBackup('backupCSV.csv', rows);
 });
 //import
-app.post("/api/import/csv", async(req, res) => {
+app.post("/api/import/csv", async (req, res) => {
     console.log("filename: " + req.body.filename)
     rows = parse.readCSVFile(req.body.filename);
     res.send("Success")
@@ -119,8 +119,9 @@ app.post("/api/import/csv", async(req, res) => {
 
 //for graphs limiting the data to 20 
 app.post("/api/graph/data", async (req, res) => {
+    //For graph api
     let graphData = [];
-    graphData = graphParsing.readCSVFile("final_data.csv", 20);
+    graphData = graphParsing.graphReadCSV("final_data.csv", 20);
     res.send({ graphData });
 });
 
