@@ -5,6 +5,7 @@ const deleteEntry = require("./utility/deleteEntry");
 const create = require("./utility/create")
 const update = require("./utility/update")
 const backup = require("./utility/backup")
+const graphParsing = require("./utility/graphParse")
 
 
 const express = require('express');
@@ -115,5 +116,13 @@ app.post("/api/import/csv", async(req, res) => {
     rows = parse.readCSVFile(req.body.filename);
     res.send("Success")
 });
+
+//for graphs limiting the data to 20 
+app.post("/api/graph/data", async (req, res) => {
+    let graphData = [];
+    graphData = graphParsing.readCSVFile("final_data.csv", 20);
+    res.send({ graphData });
+});
+
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
