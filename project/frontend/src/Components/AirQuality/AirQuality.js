@@ -1,7 +1,6 @@
 //ES7+ React/Redux ... Search "React" in VSCode Extensions -> Type rafce in blank js file
 import axios from 'axios';
 import React, { useState, useEffect, Component } from 'react';
-import logo from '../favicon.png';
 import './AirQuality.css'
 
 const AirQuality = () => {
@@ -11,21 +10,6 @@ const AirQuality = () => {
         post: '',
         responseToPost: ''
     });
-
-    useEffect(() => {
-        callApi()
-    }, []);
-
-    const callApi = async () => {
-        return axios.get('/test/get')
-            .then(resAxios => {
-                setData({ ...data, "response": resAxios.data.express })
-                console.log("MESSAGE: " + resAxios.data.express)
-            })
-            .catch(err => {
-                alert("ERROR:" + err)
-            })
-    };
 
     const handleSubmit = async e => {
         e.preventDefault();
@@ -294,7 +278,7 @@ const AirQuality = () => {
                 </h2>
             </header>
 
-            <div className="search">
+            <div className="box">
                 <form onSubmit={searchSubmit}>
                     <h1>Search</h1>
                     <p>(e.g. Riverside, Santa Fe, Seattle, ...)</p>
@@ -316,7 +300,7 @@ const AirQuality = () => {
                     <p><em>Longitude:</em> {search.longitude}</p>
                 </form>
             </div>
-            <div className="FileOperation">
+            <div className="box">
                 <h1>
                     File Operations
                 </h1>
@@ -327,7 +311,7 @@ const AirQuality = () => {
                     <button className='btn' type="submit">Backup</button>
                 </form>
             </div>
-            <div className="create">
+            <div className="box">
                 <form onSubmit={createSubmit}>
                     <h1>Create a New Entry/Row</h1>
                     <p>(Must fill all values.)</p>
@@ -348,7 +332,7 @@ const AirQuality = () => {
                 </form>
             </div>
 
-            <div className="update">
+            <div className="box">
                 <form onSubmit={updateSubmit}>
                     <h1>Update</h1>
                         <p>1. Please select a field to update:</p>
@@ -370,7 +354,7 @@ const AirQuality = () => {
                         <button className='btn' type="submit">Update</button>                  
                 </form>
             </div>
-            <div className="import">
+            <div className="box">
                 <form onSubmit={importSubmit}>
                     <h1>Import</h1>
                     <p>(Must fill all values.)</p>
@@ -379,10 +363,6 @@ const AirQuality = () => {
                 </form>
             </div>
             <div className='blank'></div>
-            <div className='footer'>
-                <p>by yours truly, Yahallo Inc.</p>
-                <img className="logo" src={logo} alt="logo" />
-            </div>
         </div>
     );
 }
