@@ -1,0 +1,56 @@
+*{
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  .Graph {
+    background-color: var(--background);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+
+  }
+  
+  .header {
+    background-color: white;
+    min-height: 50%;
+    width: 65%;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    
+    font-size: calc(10px + 2vmin);
+    color: black;
+    padding-bottom: 10px;
+  
+    border: 2px solid #ef626c;
+    padding: 10px;
+    box-shadow: 5px 10px #ef626c;
+  }
+  
+
+  /* colors 
+  FBF8CC
+  FDE4CF
+  FFCFD2
+  F1C0E8
+  CFBAF0
+  A3C4F3
+  8EECF5
+  98F5E1
+  B9FBC0
+  
+  90DBF4
+  */
+    /* margin -> border -> padding -> content*/
+  .blank {
+    height: 300px;
+    /*
+    border: 2px solid #90DBF4;
+    */
+    width: 50%;
+  }
+  
