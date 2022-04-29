@@ -36,7 +36,7 @@ app.post('/test/post', (req, res) => {
 // CSV Parse
 console.time("CSVParseTime");
 let rows = [];
-rows = parse.readCSVFile("final_data.csv");
+rows = parse.readCSVFile("final_data.csv", 500000); //Read these rows
 console.log("Parsed " + rows.length + " rows.");
 console.timeEnd("CSVParseTime");
 
@@ -113,7 +113,12 @@ app.get('/api/backup', (req, res) => {
 app.post("/api/import/csv", async(req, res) => {
     console.log("filename: " + req.body.filename)
     rows = parse.readCSVFile(req.body.filename);
-    res.send("Success")
+    res.send({ rows });
+});
+//for graphs limiting the data to 20 
+app.post("/api/graph/data", async (req, res) => {
+    rows = parse.readCSVFile("final_data.csv", 20);
+    res.send({ rows });
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
