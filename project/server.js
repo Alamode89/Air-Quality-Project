@@ -56,8 +56,14 @@ console.log(rows[rows.length - 1])
 app.get('/api/delete', (req, res) => {
     // userHasSearched will be set to false again once entry has been deleted
     // requires user to search again in order to either delete or update entries
-    userHasSearched = deleteEntry.deleteEntry(searchStatus, userHasSearched, rows);
-    res.send({ "status": "successfully deleted" });
+    var deleteStatus;
+    deleteStatus = deleteEntry.deleteEntry(searchStatus, userHasSearched, rows);
+    userHasSearched = false;
+    if (deleteStatus) {
+        res.send({ "status" : "success" });
+    } else {
+        res.send({ "status" : "failed" })
+    }
 })
 
 app.post('/api/search', (req, res) => {
@@ -71,7 +77,7 @@ app.post('/api/search', (req, res) => {
             searchStatus
         )
     } else {
-        console.log("Search: Failed");
+        res.send({ "status" : "failed" })
     }
 
 });
@@ -89,32 +95,34 @@ app.post('/api/create', (req, res) => {
 });
 
 app.post('/api/update', (req, res) => {
-    console.log("updating: " + req.body.type);
-    var serStatus = false;
-    serStatus = update.updateCity(req, rows, searchStatus)
+    console.log("Updating: " + req.body.type);
+    var updateStatus = false;
+    updateStatus = update.updateCity(req, rows, searchStatus, userHasSearched);
 
-    if (serStatus == true) {
+    if (updateStatus == true) {
+        userHasSearched = false;
         console.log("Update successful!");
-        res.send(
-            "Success"
-        )
+        res.send({ "status" : "success" });
     } else {
         console.log("Update Failed");
-        res.send(
-            "Failed"
-        )
+        res.send({ "status" : "failed" });
     }
-
 })
 
 app.get('/api/backup', (req, res) => {
     backup.createBackup('backupCSV.csv', rows);
+    res.send({ "status" : "success" });
 });
+
 //import
 app.post("/api/import/csv", async (req, res) => {
     console.log("filename: " + req.body.filename)
     rows = parse.readCSVFile(req.body.filename);
-    res.send("Success")
+    if (rows.length != 0) {
+        res.send({ "status" : "success" });
+    } else {
+        res.send({ "status" : "failed" });
+    }
 });
 
 //for graphs limiting the data to 20 

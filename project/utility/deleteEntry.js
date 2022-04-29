@@ -1,16 +1,16 @@
 const { builtinModules } = require("module");
 
 function deleteEntry(searchStatus, userHasSearched, rows) {
-    // user has already searched, the searchStatus.index will not be null/undefined value
-    if(userHasSearched) {
-        console.log(`Attempting to delete entry ${rows[searchStatus.index].city_name}, ${rows[searchStatus.index].parameter_name}, ${rows[searchStatus.index].year}`);
+    // user has already searched, value validation for searchStatus.index
+    if(userHasSearched && searchStatus.index != "" && searchStatus.index >= 0 && searchStatus.index <= rows.length) {
+        console.log(`Attempting to delete entry`);
         rows.splice(searchStatus.index, 1);
-        //console.log(`Check if deleted, following entry should be different from above: ${rows[searchStatus.index].city_name}, ${rows[searchStatus.index].parameter_name}, ${rows[searchStatus.index].year}`);
     } else {
-        console.log(`User has not searched yet, please search before attempting to delete`);
+        console.log(`User has not searched yet or the index does not exist.`);
+        // require user to search again for new entry to update or delete
+        return false;
     }
-    // require user to search again for new entry to update or delete
-    return false;
+    return true;
 }
 
 module.exports = {
