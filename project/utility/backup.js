@@ -7,7 +7,7 @@ function createBackup(fileName, rows) {
 	const csvFile = fs.createWriteStream(fileName);
 	let cpy= [];
 	stream.pipe(csvFile);
-	for( var i = 0; i < rows.length; ++i)
+	for(var i = 0; i < rows.length; ++i)
 		stream.write(rows[i]);
 	stream.end();
 	console.log('Successfully created a backup');
