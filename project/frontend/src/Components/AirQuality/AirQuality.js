@@ -31,6 +31,9 @@ const AirQuality = () => {
         console.log(inputVal)
     }
 
+    //------------------------Status----------------------------------
+    const [statusVal, setStatusVal] = useState("n/a");
+
     //------------------------Search----------------------------------
 
     const [search, setSearch] = useState({
@@ -48,6 +51,7 @@ const AirQuality = () => {
     });
 
     const searchSubmit = async (e) => {
+        setStatusVal("Searching...")
         // read ALL the data when searching for a single element
         e.preventDefault()
         //setResValue("")
@@ -55,6 +59,12 @@ const AirQuality = () => {
         console.log("Our input: " + incoming.city)
         axios.post('/api/search', incoming)
             .then(resAxios => {
+                if(resAxios.data.status == "failed") {
+                    setStatusVal("Search Failed")
+                }
+                else {
+                    setStatusVal("Search Success")
+                }
                 console.log("Incoming Data: " + JSON.stringify(resAxios.data))
                 setSearch({ ...search, 
                     "latitude": resAxios.data.latitude,
@@ -76,16 +86,25 @@ const AirQuality = () => {
 
     }
 
-
     //------------------------Delete----------------------------------
 
     const deleteSubmit = async (e) => {
+        setStatusVal("Deleting...")
         // read all the data when searching for single element
         e.preventDefault()
         //setResValue("")
         axios.get('/api/delete')
             .then(resAxios => {
                 console.log("Status: " + JSON.stringify(resAxios.data.status))
+                if(resAxios.data.status === "success") {
+                    setStatusVal("Deletion Success")
+                }
+                else if(resAxios.data.status === "failed") {
+                    setStatusVal("Deletion Failed")
+                }
+                else {
+                    setStatusVal("Unknown Deletion Error")
+                }
             })
             .catch(err => {
                 alert("ERROR:" + err)
@@ -129,6 +148,7 @@ const AirQuality = () => {
     }
 
     const createSubmit = async (e) => {
+        setStatusVal("Creating...")
         // read ALL the data when searching for a single element
         e.preventDefault()
         //setResValue("")
@@ -150,6 +170,15 @@ const AirQuality = () => {
         axios.post('/api/create', createPayload)
             .then(resAxios => {
                 console.log("Status: " + JSON.stringify(resAxios.data.status))
+                if(resAxios.data.status === "success") {
+                    setStatusVal("Creation Successful")
+                }
+                else if(resAxios.data.status === "failed") {
+                    setStatusVal("Creation Failed")
+                }
+                else {
+                    setStatusVal("Unknown Creation Error")
+                }
             })
             .catch(err => {
                 alert("ERROR:" + err)
@@ -159,7 +188,7 @@ const AirQuality = () => {
 
            //------------------------Update----------------------------------
    const [updateInput, setUpdateInput] = useState({
-    updateType: '',
+    updateType: 'city_name',
     updateCity: '',
     updatePollutant: '',
     updateMetric: '',
@@ -191,6 +220,7 @@ const AirQuality = () => {
     }
 
     const updateSubmit = async (e) => {
+        setStatusVal("Updating...")
         e.preventDefault()
         let updatePayload = { 
             type: updateInput.updateType,
@@ -213,6 +243,15 @@ const AirQuality = () => {
         axios.post('/api/update', updatePayload)
             .then(resAxios => {
                 console.log("Status: " + JSON.stringify(resAxios.data))
+                if(resAxios.data.status === "success") {
+                    setStatusVal("Update Successful")
+                }
+                else if(resAxios.data.status === "failed") {
+                    setStatusVal("Update Failed")
+                }
+                else {
+                    setStatusVal("Unknown Update Error")
+                }
             })
             .catch(err => {
                 alert("ERROR:" + err)
@@ -223,8 +262,10 @@ const AirQuality = () => {
 
     //-----------------------Backup---------------------------------
 	const backup = async (e) => {
+        setStatusVal("Backing up...")
 		e.preventDefault()
 		axios.get('/api/backup')
+        setStatusVal("Backup Success")
 	}
     //-----------------------Import---------------------------------
     const [handleInput, setHandleInput] = useState({
@@ -253,6 +294,7 @@ const AirQuality = () => {
     }
 
     const importSubmit = async (e) => {
+        setStatusVal("Importing...")
         // read ALL the data when searching for a single element
         e.preventDefault()
         console.log("fileName" + handleInput.fileName)
@@ -263,6 +305,15 @@ const AirQuality = () => {
         axios.post('/api/import/csv', obj)
             .then(resAxios => {
                 console.log("Status: " + JSON.stringify(resAxios.data))
+                if(resAxios.data.status === "success") {
+                    setStatusVal("Import Successful")
+                }
+                else if(resAxios.data.status === "failed") {
+                    setStatusVal("Import Failed")
+                }
+                else {
+                    setStatusVal("Unknown Import Error")
+                }
             })
             .catch(err => {
                 alert("ERROR:" + err)
@@ -276,6 +327,7 @@ const AirQuality = () => {
                 <h2>
                     Air Quality Interactive
                 </h2>
+                <p>Status: {statusVal}</p>
             </header>
 
             <div className="box">

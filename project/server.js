@@ -117,8 +117,9 @@ app.get('/api/backup', (req, res) => {
 //import
 app.post("/api/import/csv", async (req, res) => {
     console.log("filename: " + req.body.filename)
-    rows = parse.readCSVFile(req.body.filename);
-    if (rows.length != 0) {
+    let testArr = parse.readCSVFile(req.body.filename);
+    if (testArr.length != 0) {
+        rows = testArr;
         res.send({ "status" : "success" });
     } else {
         res.send({ "status" : "failed" });
