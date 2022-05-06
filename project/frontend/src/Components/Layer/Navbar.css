@@ -1,0 +1,42 @@
+.Navbar {
+    background: #212529;
+    color: white;
+    width: 100vw;
+    height: 8vh;
+}
+
+.nav {
+    position: fixed;
+    padding: .3rem .5rem;
+    font-size: 1.2rem;
+    color: white;
+    cursor: pointer;
+    transition: all .2s ease-in-out;
+}
+
+.tabs a {
+    text-decoration: none;
+}
+
+.navImage {
+    width: 41px;
+    height: 40px;
+    position: fixed;
+    top: 10px;
+    left: 80px;
+}
+
+.nav:nth-of-type(1) {
+    right: 160px;
+    top: 10px;
+}
+
+.nav:nth-of-type(2) {
+    right: 100px;
+    top: 10px;
+}
+
+.nav:nth-of-type(3) {
+    right: 30px;
+    top: 10px;
+}
