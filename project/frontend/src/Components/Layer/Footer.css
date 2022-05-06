@@ -4,7 +4,7 @@
     height: 45px;
     bottom: 0;
     width: 100%;
-    background-color: #A3C4F3;
+    background-color: #62929E;
     color: white;
     text-align: center;
     display: flex;
@@ -17,7 +17,7 @@
     height: 40px;
     position: absolute;
     bottom: 2px;
-    left: 10px;
+    margin-left: 10px;
     border-radius: 50%;
 }
 
