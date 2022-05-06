@@ -1,4 +1,3 @@
-//ES7+ React/Redux ... Search "React" in VSCode Extensions -> Type rafce in blank js file
 import axios from 'axios';
 import React, { useState, useEffect, Component } from 'react';
 import ReactApexChart from "react-apexcharts"; // for graph
@@ -6,9 +5,15 @@ import './Graph.css';
 
 
 const Graph = () => {
+    /*
     const [csvData, setCsvData] = useState([]);
     const [csvDates, setCsvDates] = useState([]);
     const [isData, setIsData] = useState(false);
+    */
+    const [isData, setIsData] = useState(true);
+
+    const [pollution, setPollution] = useState([]);
+    const [ariMean, setAriMean] = useState([]);
 
     //Adding graph
     const graphSubmit = async (e) => {
@@ -18,7 +23,12 @@ const Graph = () => {
         axios
             .post("/api/graph/data")
             .then((resAxios) => {
-                console.log({ data: resAxios.data });
+                console.log("original: " + resAxios.data.graphData)
+
+/*
+
+                //console.log({ data: resAxios.data });
+                //console.log(resAxios.data)
                 const temp = [];
                 const dates = [];
                 const cities = [];
@@ -27,6 +37,9 @@ const Graph = () => {
                         temp.push(val[5]);
                         dates.push(val[4]);
                         cities.push(val[8]);
+                        console.log("temp: " + val[5])
+                        console.log("dates: " + val[4])
+                        console.log("cities: " + val[8])
                     }
                 });
 
@@ -55,18 +68,37 @@ const Graph = () => {
                 });
                 setCsvDates(dateCities);
                 setIsData(true);
-            })
+
+                */
+                const incPollution = [];
+                const arithMean = [];
+                resAxios.data.graphData.map((val, ind) => {
+                    if (ind) {
+                        incPollution.push(val.pollutant);
+                        arithMean.push(val.arithmetic_mean);
+                    }
+                });
+                setPollution(incPollution);
+                setAriMean(arithMean);
+
+                console.log(incPollution)
+                console.log(arithMean)
+
+            }
+            
+            
+            )
             .catch((err) => {
                 alert("ERROR:" + err);
             });
     };
 
-    console.log({ csvDates, csvData });
+    //console.log({ csvDates, csvData });
     const lineData = {
         series: [
             {
-                name: "observation count",
-                data: csvData,
+                name: "Arithmetic Mean",
+                data: ariMean,
             },
         ],
         options: {
@@ -84,25 +116,179 @@ const Graph = () => {
                 curve: "smooth",
             },
             title: {
-                text: "City Polution by year",
+                text: "City Pollution's Data",
                 align: "left",
             },
-            grid: {
-                row: {
-                    colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
-                    opacity: 0.5,
-                },
+            xaxis: {
+                categories: pollution,
+            },
+        },
+    };
+    //--------------------Top10Pollutant----------------------------
+    const [pollutantName, setPollutantName] = useState([]);
+    const [numofPollutant, setnumofPollutant] = useState([]);
+    
+    
+    const graphtop10 = async (e) => {
+        e.preventDefault()
+        axios
+            .post('/api/graph/top10pollutants')
+            .then((resAxios) => {
+                const pollutant = [];
+                const numP = [];
+                console.log("top10: " + resAxios.data.graphData2)
+                resAxios.data.graphData2.map((val, ind) => {
+                    if (ind) {
+                        pollutant.push(val.parameter_name);
+                        numP.push(val.num);
+                    }
+                });
+                setPollutantName(pollutant);
+                setnumofPollutant(numP);
+
+                console.log(pollutant)
+                console.log(numP)
+            });
+    };
+    const barData = {
+        series: [
+            {
+                name: "Num of Pollutant Observed",
+                data: numofPollutant,
+            },
+        ],
+        options: {
+            chart: {
+                height: 350,
+                type: "bar",
+            },
+            plotOptions: {
+                bar: {
+                    borderRadius: 4,
+                    horizontal: true,
+                }
+            },
+            dataLabels: {
+                enabled: false,
+            },
+            title: {
+                text: "Top 10 Pollutants",
+                align: "left",
             },
             xaxis: {
-                categories: csvDates,
+                categories: pollutantName,
+            },
+        },
+    };
+    //------------------------Top 10 Cities----------------------------------
+    const [cityName, setCityName] = useState([]);
+    const [arithmeticMean, setarithmeticMean] = useState([]);
+
+    const graphtop10cities = async (e) => {
+        e.preventDefault()
+        axios
+            .post('/api/graph/top10cities')
+            .then((resAxios) => {
+                const city = [];
+                const aMean = [];
+                resAxios.data.graphTopCities.map((val, ind) => {
+                    if (ind) {
+                        city.push(val.city_name);
+                        aMean.push(val.arithmetic_mean);
+                    }
+                });
+                setCityName(city);
+                setarithmeticMean(aMean);
+            });
+    };
+    const bar2Data = {
+        series: [
+            {
+                name: "Sum of Arithmetic Mean",
+                data: arithmeticMean,
+            },
+        ],
+        options: {
+            chart: {
+                height: 350,
+                type: "bar",
+            },
+            plotOptions: {
+                bar: {
+                    borderRadius: 4,
+                    horizontal: true,
+                }
+            },
+            dataLabels: {
+                enabled: false,
+            },
+            title: {
+                text: "Top 10 Cities",
+                align: "left",
+            },
+            xaxis: {
+                categories: cityName,
+            },
+        },
+    };
+    //--------------------Top 10 Mean-------------------------------
+    const [pollu, setpolluName] = useState([]);
+    const [arithMean, setarithMean] = useState([]);
+
+    const graphtop10mean = async (e) => {
+        e.preventDefault()
+        axios
+            .post('/api/graph/top10mean')
+            .then((resAxios) => {
+                const pollut = [];
+                const arithmeticMean = [];
+                resAxios.data.graphTopMean.map((val, ind) => {
+                    if (ind) {
+                        pollut.push(val.pollutant);
+                        arithmeticMean.push(val.arithmetic_mean);
+                    }
+                });
+                setpolluName(pollut);
+                setarithMean(arithmeticMean);
+            });
+    };
+
+    const bar3Data = {
+        series: [
+            {
+                name: "Concentration of Pollutant",
+                data: arithMean,
+            },
+        ],
+        options: {
+            chart: {
+                height: 350,
+                type: "bar",
+            },
+            plotOptions: {
+                bar: {
+                    borderRadius: 4,
+                    horizontal: true,
+                }
+            },
+            dataLabels: {
+                enabled: false,
+            },
+            title: {
+                text: "Top 10 Concentration of Pollutant",
+                align: "left",
+            },
+            xaxis: {
+                categories: pollu,
             },
         },
     };
 
+
     //------------------------HTML----------------------------------
     return (
         <div className="Graph" >
-            <header className="graph_header">
+            <header className="header">
                 <h2>
                     Graph
                 </h2>
@@ -127,7 +313,74 @@ const Graph = () => {
                         />
                     </div>
                 ) : null}
+            </div>            
+            
+            <div className="graph_box">
+                <form onSubmit={graphtop10}>
+                    <h1>Top 10 Pollutants</h1>
+
+                    <button className="graph_btn" type="submit">
+                        Render Graph
+                    </button>
+                </form>
+                {/* // to show the graph */}
+                {isData ? (
+                    <div style={{ marginTop: "30px", width: "100%" }}>
+                        <ReactApexChart
+                            options={barData.options}
+                            series={barData.series}
+                            type="bar"
+                            height={350}
+                            width={"100%"}
+                        />
+                    </div>
+                ) : null}
             </div>
+            
+            <div className="graph_box">
+                <form onSubmit={graphtop10cities}>
+                    <h1>Top 10 Cities</h1>
+
+                    <button className="graph_btn" type="submit">
+                        Render Graph
+                    </button>
+                </form>
+                {/* // to show the graph */}
+                {isData ? (
+                    <div style={{ marginTop: "30px", width: "100%" }}>
+                        <ReactApexChart
+                            options={bar2Data.options}
+                            series={bar2Data.series}
+                            type="bar"
+                            height={350}
+                            width={"100%"}
+                        />
+                    </div>
+                ) : null}
+            </div>
+
+            <div className="graph_box">
+                <form onSubmit={graphtop10mean}>
+                    <h1>Top 10 Pollutant Mean</h1>
+
+                    <button className="graph_btn" type="submit">
+                        Render Graph
+                    </button>
+                </form>
+                {/* // to show the graph */}
+                {isData ? (
+                    <div style={{ marginTop: "30px", width: "100%" }}>
+                        <ReactApexChart
+                            options={bar3Data.options}
+                            series={bar3Data.series}
+                            type="bar"
+                            height={350}
+                            width={"100%"}
+                        />
+                    </div>
+                ) : null}
+            </div>
+
             <div className='graph_blank'></div>
 
         </div>
