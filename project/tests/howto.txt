@@ -1,0 +1,3 @@
+-[npm install jest]
+-edit package.json and under scripts, change it to "test": "jest"
+-npm test
