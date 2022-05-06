@@ -17,10 +17,12 @@
   "author": "Andre Amante, Kobe Braga, Roy Feng, Joseph Tham, Abanob Wahba",
   "license": "ISC",
   "dependencies": {
+    "apexcharts": "^3.35.0",
     "body-parser": "^1.20.0",
     "concurrently": "^7.1.0",
     "csv-writer": "^1.6.0",
     "express": "^4.17.3",
-    "fast-csv": "^4.3.6"
+    "fast-csv": "^4.3.6",
+    "react-apexcharts": "^1.4.0"
   }
 }

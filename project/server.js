@@ -6,6 +6,9 @@ const create = require("./utility/create")
 const update = require("./utility/update")
 const backup = require("./utility/backup")
 const graphParsing = require("./utility/graphParse")
+const graphTop10Polluant = require("./utility/top10pollu")
+const graphTop10Cities = require("./utility/top10cities")
+const graphTop10Mean = require("./utility/top10mean")
 
 
 const express = require('express');
@@ -134,5 +137,28 @@ app.post("/api/graph/data", async (req, res) => {
     res.send({ graphData });
 });
 
+app.post("/api/graph/top10pollutants", async (req, res) => {
+    let graphData2 = [];
+    graphData2 = graphTop10Polluant.createTop10Polltuant(rows);
+    graphData2 = graphData2.slice(0, 11);
+    console.log(graphData2);
+    res.send({ graphData2 });
+});
+
+app.post("/api/graph/top10cities", async (req, res) => {
+    let graphTopCities = [];
+    graphTopCities = graphTop10Cities.createTop10Cities(rows);
+    graphTopCities = graphTopCities.slice(0, 11);
+    console.log(graphTopCities);
+    res.send({ graphTopCities });
+});
+
+app.post("/api/graph/top10mean", async (req, res) => {
+    let graphTopMean = [];
+    graphTopMean = graphTop10Mean.createTop10Means(rows);
+    graphTopMean = graphTopMean.slice(0, 11);
+    console.log(graphTopMean);
+    res.send({ graphTopMean });
+});
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
