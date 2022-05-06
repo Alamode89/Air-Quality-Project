@@ -1,6 +1,6 @@
 const { builtinModules } = require("module");
 
-function createTop10Polltuant(rows) {
+function createTop10Pollutant(rows) {
     var tempArr = [];
     let num = 0;
     var obj = {};
@@ -33,5 +33,5 @@ function createTop10Polltuant(rows) {
 }
 
 module.exports = {
-    createTop10Polltuant
+    createTop10Pollutant
 }

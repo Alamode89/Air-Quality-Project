@@ -137,7 +137,7 @@ const Graph = () => {
                 const pollutant = [];
                 const numP = [];
                 console.log("top10: " + resAxios.data.graphData2)
-                resAxios.data.graphData2.map((val, ind) => {
+                resAxios.data.pollutantsCache.map((val, ind) => {
                     if (ind) {
                         pollutant.push(val.parameter_name);
                         numP.push(val.num);
@@ -191,7 +191,7 @@ const Graph = () => {
             .then((resAxios) => {
                 const city = [];
                 const aMean = [];
-                resAxios.data.graphTopCities.map((val, ind) => {
+                resAxios.data.citiesCache.map((val, ind) => {
                     if (ind) {
                         city.push(val.city_name);
                         aMean.push(val.arithmetic_mean);
@@ -242,7 +242,7 @@ const Graph = () => {
             .then((resAxios) => {
                 const pollut = [];
                 const arithmeticMean = [];
-                resAxios.data.graphTopMean.map((val, ind) => {
+                resAxios.data.meansCache.map((val, ind) => {
                     if (ind) {
                         pollut.push(val.pollutant);
                         arithmeticMean.push(val.arithmetic_mean);

@@ -6,7 +6,7 @@ const create = require("./utility/create")
 const update = require("./utility/update")
 const backup = require("./utility/backup")
 const graphParsing = require("./utility/graphParse")
-const graphTop10Polluant = require("./utility/top10pollu")
+const graphTop10Pollutant = require("./utility/top10pollu")
 const graphTop10Cities = require("./utility/top10cities")
 const graphTop10Mean = require("./utility/top10mean")
 
@@ -23,6 +23,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 var userHasSearched = false;
 var searchStatus = {};
 var graphCity = "";
+var pollutantsCache = []
+var citiesCache = []
+var meansCache = []
+// true indicates that the user has modified rows
+// as a result we must update the top 10 cities, pollutants, and means again
+var cacheNotUpdated = [true, true, true]
 
 // API Endpoints
 app.get('/test/get', (req, res) => {
@@ -66,6 +72,9 @@ app.get('/api/delete', (req, res) => {
     deleteStatus = deleteEntry.deleteEntry(searchStatus, userHasSearched, rows);
     userHasSearched = false;
     if (deleteStatus) {
+        for (let i = 0; i < cacheNotUpdated.length; i++) {
+            cacheNotUpdated[i] = true
+        }
         res.send({ "status" : "success" });
     } else {
         res.send({ "status" : "failed" })
@@ -95,6 +104,9 @@ app.post('/api/create', (req, res) => {
     if (tempEntry.length == 0) {
         res.send({ status: "failed" })
     } else {
+        for (let i = 0; i < cacheNotUpdated.length; i++) {
+            cacheNotUpdated[i] = true
+        }
         rows.push(tempEntry);
         res.send({ status: "success" })
     }
@@ -108,6 +120,9 @@ app.post('/api/update', (req, res) => {
 
     if (updateStatus == true) {
         userHasSearched = false;
+        for (let i = 0; i < cacheNotUpdated.length; i++) {
+            cacheNotUpdated[i] = true
+        }
         console.log("Update successful!");
         res.send({ "status" : "success" });
     } else {
@@ -158,27 +173,39 @@ app.post("/api/graph/data", async (req, res) => {
 });
 
 app.post("/api/graph/top10pollutants", async (req, res) => {
-    let graphData2 = [];
-    graphData2 = graphTop10Polluant.createTop10Polltuant(rows);
-    graphData2 = graphData2.slice(0, 11);
-    console.log(graphData2);
-    res.send({ graphData2 });
+    if (cacheNotUpdated[0]) {
+        cacheNotUpdated[0] = false;
+        let graphTopPollutants = [];
+        graphTopPollutants = graphTop10Pollutant.createTop10Pollutant(rows);
+        graphTopPollutants = graphTopPollutants.slice(0, 11);
+        pollutantsCache = graphTopPollutants;
+    }
+    console.log(pollutantsCache);
+    res.send({ pollutantsCache });
 });
 
 app.post("/api/graph/top10cities", async (req, res) => {
-    let graphTopCities = [];
-    graphTopCities = graphTop10Cities.createTop10Cities(rows);
-    graphTopCities = graphTopCities.slice(0, 11);
-    console.log(graphTopCities);
-    res.send({ graphTopCities });
+    if (cacheNotUpdated[1]) {
+        cacheNotUpdated[1] = false;
+        let graphTopCities = [];
+        graphTopCities = graphTop10Cities.createTop10Cities(rows);
+        graphTopCities = graphTopCities.slice(0, 11);
+        citiesCache = graphTopCities;
+    }
+    console.log(citiesCache);
+    res.send({ citiesCache });
 });
 
 app.post("/api/graph/top10mean", async (req, res) => {
-    let graphTopMean = [];
-    graphTopMean = graphTop10Mean.createTop10Means(rows);
-    graphTopMean = graphTopMean.slice(0, 11);
-    console.log(graphTopMean);
-    res.send({ graphTopMean });
+    if (cacheNotUpdated[2]) {
+        cacheNotUpdated[2] = false;
+        let graphTopMean = [];
+        graphTopMean = graphTop10Mean.createTop10Means(rows);
+        graphTopMean = graphTopMean.slice(0, 11);
+        meansCache = graphTopMean
+    }
+    console.log(meansCache);
+    res.send({ meansCache });
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
