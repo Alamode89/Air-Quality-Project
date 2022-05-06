@@ -1,0 +1,7 @@
+.Home {
+    background: #212529;
+    color: white;
+    /* vw vh for viewable height and viewable width*/
+    width: 100vw;
+    height: 100vh;
+}
