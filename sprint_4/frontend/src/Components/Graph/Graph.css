@@ -52,6 +52,14 @@
   outline: none;
 }
 
+.button:active {
+  transform: translateY(9px) translateX(9px);
+}
+
+.button:focus {
+  outline: none;
+}
+
 /* colors 
   FBF8CC
   FDE4CF
