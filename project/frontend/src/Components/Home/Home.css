@@ -3,5 +3,72 @@
     color: white;
     /* vw vh for viewable height and viewable width*/
     width: 100vw;
-    height: 100vh;
+    height: 305vh;
 }
+
+.Home h1 {
+    margin: 0;
+}
+
+.home_op {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+.home_box {
+    color: white;
+    width: 50%;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+.home_box:nth-of-type(1) {
+    border: 2px solid #90DBF4;
+    box-shadow: 5px 10px #90DBF4;
+}
+  
+  .home_box:nth-of-type(2) {
+    border: 2px solid #FBF8CC;
+    box-shadow: 5px 10px #FBF8CC;
+  }
+  
+  .home_box:nth-of-type(3) {
+    border: 2px solid #FDE4CF;
+    box-shadow: 5px 10px #FDE4CF;
+  }
+  
+  .home_box:nth-of-type(4) {
+    border: 2px solid #FFCFD2;
+    box-shadow: 5px 10px #FFCFD2;
+  }
+  
+  .home_box:nth-of-type(5) {
+    border: 2px solid #F1C0E8;
+    box-shadow: 5px 10px #F1C0E8;
+  }
+  
+  .home_box input {
+    border-radius: 10px;
+    width: 15rem;
+  }
+  .home_box button {
+    border-radius: 10px;
+    background-color: white;
+    color:black;
+    border: 2px solid black;
+    font-size: 0.8rem;
+  
+    padding:.15em .6rem;
+    margin-left: 10px;
+    
+  }
+  
+  .home_button:active {
+    transform: translateY(9px) translateX(9px);
+  }
+  .home_button:focus {
+    outline: none;
+  }
