@@ -1,0 +1,106 @@
+
+/* Can't share same names with other components */
+.Graph {
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  
+}
+
+.graph_header {
+  background-color: white;
+  min-height: 50%;
+  width: 65%;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  
+  font-size: calc(10px + 2vmin);
+  color: black;
+  padding-bottom: 10px;
+
+  border: 2px solid #ef626c;
+  padding: 10px;
+  box-shadow: 5px 10px #ef626c;
+}
+
+.graph_box {
+  color: black;
+  width: 50%;
+  margin-top: 20px;
+  padding: 10px;
+}
+
+.graph_box:nth-of-type(1) {
+  border: 2px solid #90DBF4;
+  box-shadow: 5px 10px #90DBF4;
+}
+
+.graph_box:nth-of-type(2) {
+  border: 2px solid #FBF8CC;
+  box-shadow: 5px 10px #FBF8CC;
+}
+
+.graph_box:nth-of-type(3) {
+  border: 2px solid #FDE4CF;
+  box-shadow: 5px 10px #FDE4CF;
+}
+
+.graph_box:nth-of-type(4) {
+  border: 2px solid #FFCFD2;
+  box-shadow: 5px 10px #FFCFD2;
+}
+
+.graph_box:nth-of-type(5) {
+  border: 2px solid #F1C0E8;
+  box-shadow: 5px 10px #F1C0E8;
+}
+
+.graph_box input {
+  border-radius: 10px;
+  width: 15rem;
+}
+.graph_box button {
+  border-radius: 10px;
+  background-color: white;
+  color:black;
+  border: 2px solid black;
+  font-size: 0.8rem;
+
+  padding:.15em .6rem;
+  margin-left: 10px;
+  
+}
+
+.graph_btn:active {
+  transform: translateY(9px) translateX(9px);
+}
+.graph_btn:focus {
+  outline: none;
+}
+/* colors 
+FBF8CC
+FDE4CF
+FFCFD2
+F1C0E8
+CFBAF0
+A3C4F3
+8EECF5
+98F5E1
+B9FBC0
+
+90DBF4
+*/
+  /* margin -> border -> padding -> content*/
+.graph_blank {
+  height: 300px;
+  /*
+  border: 2px solid #90DBF4;
+  */
+  width: 50%;
+}
