@@ -1,16 +1,29 @@
 const { builtinModules } = require("module");
 
-function readCSVFile(fileName) {
-  var fs = require("fs");
-  var textByLine = fs.readFileSync(fileName).toString().split("\n");
-  //console.log(textByLine);
-  //res returns array
-  const res = textByLine.map((line) => line.split(","));
-  //rows = res
-  console.log(res)
-  return res;
+function graphReadCSV(rows, graphCity) {
+  if (graphCity == "") {
+    return []
+  }
+
+  let occurances = []
+  for (var i = 0; i < rows.length; ++i) {
+    if (graphCity.toLowerCase() == rows[i][10].toLowerCase()) {
+      // DEBUG for graph 1
+      //console.log("City:" + rows[i][10])
+      occurances.push({"pollutant": rows[i][2], "arithmetic_mean": rows[i][6]})
+    }
+  }
+
+  // DEBUG for graph 1
+/*
+  for (var i = 0; i < occurances.length; ++i) {
+    console.log(occurances[i])
+  }*/
+  
+
+  return occurances;
 }
 
 module.exports = {
-    readCSVFile
+  graphReadCSV
 }

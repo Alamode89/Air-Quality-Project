@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // delete function and update function
 var userHasSearched = false;
 var searchStatus = {};
-
+var graphCity = "";
 
 // API Endpoints
 app.get('/test/get', (req, res) => {
@@ -54,6 +54,9 @@ console.log(rows[rows.length - 2])
 console.log(rows[rows.length - 1])
 */
 
+// DEBUG for graph 1
+//graphParsing.graphReadCSV(rows, "riverside")
+
 
 // delete a dataset entry
 app.get('/api/delete', (req, res) => {
@@ -73,6 +76,7 @@ app.post('/api/search', (req, res) => {
     console.log(req.body.city);
     searchStatus = search.searchCity(req.body.city, rows);
     if (Object.keys(searchStatus).length != 0) {
+        graphCity = req.body.city;
         console.log("Search Success" + searchStatus);
         // user has now used search, may enter the update and delete functions
         userHasSearched = true;
@@ -132,9 +136,25 @@ app.post("/api/import/csv", async (req, res) => {
 //for graphs limiting the data to 20 
 app.post("/api/graph/data", async (req, res) => {
     //For graph api
+    /*
     let graphData = [];
     graphData = graphParsing.graphReadCSV("final_data.csv", 20);
     res.send({ graphData });
+    */
+   let graphData = [];
+   // DEBUG for graph 1
+   graphData = graphParsing.graphReadCSV(rows, graphCity)
+   //splice just cuts
+   graphData = graphData.splice(0,11);
+   console.log(graphData)
+   //graphData = graphParsing.graphReadCSV(rows, graphCity)
+
+   if (graphData.length == 0) {
+       res.send( "failed")
+   }
+   else {
+    res.send({ graphData })
+   }
 });
 
 app.post("/api/graph/top10pollutants", async (req, res) => {
