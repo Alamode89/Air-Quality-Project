@@ -1,7 +1,5 @@
-*{
-  font-family: 'Roboto', sans-serif;
-}
 
+/* Can't share same names with other components */
 .AirQuality {
   background-color: white;
   display: flex;
@@ -11,7 +9,7 @@
   
 }
 
-.header {
+.aq_header {
   background-color: white;
   min-height: 50%;
   width: 65%;
@@ -31,43 +29,43 @@
   box-shadow: 5px 10px #ef626c;
 }
 
-.box {
+.aq_box {
   color: black;
   width: 50%;
   margin-top: 20px;
   padding: 10px;
 }
 
-.box:nth-of-type(1) {
+.aq_box:nth-of-type(1) {
   border: 2px solid #90DBF4;
   box-shadow: 5px 10px #90DBF4;
 }
 
-.box:nth-of-type(2) {
+.aq_box:nth-of-type(2) {
   border: 2px solid #FBF8CC;
   box-shadow: 5px 10px #FBF8CC;
 }
 
-.box:nth-of-type(3) {
+.aq_box:nth-of-type(3) {
   border: 2px solid #FDE4CF;
   box-shadow: 5px 10px #FDE4CF;
 }
 
-.box:nth-of-type(4) {
+.aq_box:nth-of-type(4) {
   border: 2px solid #FFCFD2;
   box-shadow: 5px 10px #FFCFD2;
 }
 
-.box:nth-of-type(5) {
+.aq_box:nth-of-type(5) {
   border: 2px solid #F1C0E8;
   box-shadow: 5px 10px #F1C0E8;
 }
 
-.box input {
+.aq_box input {
   border-radius: 10px;
   width: 15rem;
 }
-.box button {
+.aq_box button {
   border-radius: 10px;
   background-color: white;
   color:black;
@@ -79,10 +77,10 @@
   
 }
 
-.btn:active {
+.aq_btn:active {
   transform: translateY(9px) translateX(9px);
 }
-.btn:focus {
+.aq_btn:focus {
   outline: none;
 }
 /* colors 
@@ -99,7 +97,7 @@ B9FBC0
 90DBF4
 */
   /* margin -> border -> padding -> content*/
-.blank {
+.aq_blank {
   height: 300px;
   /*
   border: 2px solid #90DBF4;

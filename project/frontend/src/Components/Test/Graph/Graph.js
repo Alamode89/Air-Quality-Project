@@ -102,16 +102,16 @@ const Graph = () => {
     //------------------------HTML----------------------------------
     return (
         <div className="Graph" >
-            <header className="header">
+            <header className="graph_header">
                 <h2>
                     Graph
                 </h2>
             </header>
-            <div className="box">
+            <div className="graph_box">
                 <form onSubmit={graphSubmit}>
                     <h1>observation count with states</h1>
 
-                    <button className="btn" type="submit">
+                    <button className="graph_btn" type="submit">
                         Render Graph
                     </button>
                 </form>
@@ -128,7 +128,7 @@ const Graph = () => {
                     </div>
                 ) : null}
             </div>
-            <div className='blank'></div>
+            <div className='graph_blank'></div>
 
         </div>
 

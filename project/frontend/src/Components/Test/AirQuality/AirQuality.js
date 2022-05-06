@@ -323,19 +323,19 @@ const AirQuality = () => {
     //------------------------HTML----------------------------------
     return (
         <div className="AirQuality">
-            <header className="header">
+            <header className="aq_header">
                 <h2>
                     Air Quality Interactive
                 </h2>
                 <p>Status: {statusVal}</p>
             </header>
 
-            <div className="box">
+            <div className="aq_box">
                 <form onSubmit={searchSubmit}>
                     <h1>Search</h1>
                     <p>(e.g. Riverside, Santa Fe, Seattle, ...)</p>
                     <input type="text" value={inputVal} onChange={handleTyping} />
-                    <button className='btn' type="submit">Search</button>
+                    <button className='aq_btn' type="submit">Search</button>
                     {/*<p>{resValue}</p>*/}
                     <h3>City: {search.city_name}</h3>
                     <h3><u>Air</u></h3>
@@ -352,18 +352,18 @@ const AirQuality = () => {
                     <p><em>Longitude:</em> {search.longitude}</p>
                 </form>
             </div>
-            <div className="box">
+            <div className="aq_box">
                 <h1>
                     File Operations
                 </h1>
                 <form onSubmit={deleteSubmit}>
-                        <button className='btn' type="submit">Delete Entry.</button>
+                        <button className='aq_btn' type="submit">Delete Entry.</button>
                     </form>
                 <form onSubmit={backup}>
-                    <button className='btn' type="submit">Backup</button>
+                    <button className='aq_btn' type="submit">Backup</button>
                 </form>
             </div>
-            <div className="box">
+            <div className="aq_box">
                 <form onSubmit={createSubmit}>
                     <h1>Create a New Entry/Row</h1>
                     <p>(Must fill all values.)</p>
@@ -380,11 +380,11 @@ const AirQuality = () => {
                     <p><em>State:</em> <input type="text" name="newState" value={createInput.newState} onChange={handleCreate} /></p>
                     <p><em>Latitude:</em> <input type="text" name="newLatitude" value={createInput.newLatitude} onChange={handleCreate} /></p>
                     <p><em>Longitude:</em> <input type="text" name="newLongitude" value={createInput.newLongitude} onChange={handleCreate} /></p>
-                    <button className='btn' type="submit">Submit</button>
+                    <button className='aq_btn' type="submit">Submit</button>
                 </form>
             </div>
 
-            <div className="box">
+            <div className="aq_box">
                 <form onSubmit={updateSubmit}>
                     <h1>Update</h1>
                         <p>1. Please select a field to update:</p>
@@ -403,18 +403,18 @@ const AirQuality = () => {
                         </select>
                         <p>2. Please enter new data for the field:</p>
                         <input type="text" value={updateUser.userInput} onChange={handleUpdateUser}></input>
-                        <button className='btn' type="submit">Update</button>                  
+                        <button className='aq_btn' type="submit">Update</button>                  
                 </form>
             </div>
-            <div className="box">
+            <div className="aq_box">
                 <form onSubmit={importSubmit}>
                     <h1>Import</h1>
                     <p>(Must fill all values.)</p>
                     <h3>fileName: <input type="text" value={handleInput.fileName} onChange={handleImport} /></h3>
-                    <button className='btn' type="submit">Submit</button>
+                    <button className='aq_btn' type="submit">Submit</button>
                 </form>
             </div>
-            <div className='blank'></div>
+            <div className='aq_blank'></div>
         </div>
     );
 }
