@@ -242,6 +242,29 @@ const Graph = () => {
                 console.log(numP)
             });
     };
+
+    const addtoTop10Pollutant = async (e) => {
+        e.preventDefault()
+        let incoming = { pollutantName: inputVal }
+        axios
+            .post('/api/graph/addPollutant', incoming)
+            .then((resAxios) => {
+                const pollutant2 = [];
+                const numP2 = [];
+                resAxios.data.addPollutantCache.map((val, ind) => {
+                    if (ind) {
+                        pollutant2.push(val.parameter_name);
+                        numP2.push(val.num);
+                    }
+                });
+                setPollutantName(pollutant2);
+                setnumofPollutant(numP2);
+
+                console.log(pollutantName)
+                console.log(numofPollutant)
+            });
+    };
+
     const barData = {
         series: [
             {
@@ -293,6 +316,27 @@ const Graph = () => {
                 setarithmeticMean(aMean);
             });
     };
+
+    const addtoTop10Cities = async (e) => {
+        e.preventDefault()
+        let incoming = { cityName: inputVal2 }
+        axios
+            .post('/api/graph/addTopCities', incoming)
+            .then((resAxios) => {
+                const city2 = [];
+                const aMean2 = [];
+                resAxios.data.addCityCache.map((val, ind) => {
+                    if (ind) {
+                        city2.push(val.city_name);
+                        aMean2.push(val.arithmetic_mean);
+                    }
+                });
+                setCityName(city2);
+                setarithmeticMean(aMean2);
+            });
+    };
+
+
     const bar2Data = {
         series: [
             {
@@ -345,6 +389,25 @@ const Graph = () => {
             });
     };
 
+    const addtoTop10PolluMean = async (e) => {
+        e.preventDefault()
+        let incoming = { polluName: inputVal3 }
+        axios
+            .post('/api/graph/addTopPolluMean', incoming)
+            .then((resAxios) => {
+                const p = [];
+                const m = [];
+                resAxios.data.addPolluMeanCache.map((val, ind) => {
+                    if (ind) {
+                        p.push(val.pollutant);
+                        m.push(val.arithmetic_mean);
+                    }
+                });
+                setpolluName(p);
+                setarithMean(m);
+            });
+    };
+
     const bar3Data = {
         series: [
             {
@@ -375,6 +438,55 @@ const Graph = () => {
             },
         },
     };
+
+    //-----------------------Helper---------------------------------
+
+    const [inputVal, setInputVal] = useState("");
+    const [inputVal2, setInputVal2] = useState("");
+    const [inputVal3, setInputVal3] = useState("");
+
+    const handleTyping = (e) => {
+        setInputVal(e.target.value)
+        console.log(inputVal)
+    }
+
+    const handleTyping2 = (e) => {
+        setInputVal2(e.target.value)
+        console.log(inputVal2)
+    }
+
+    const handleTyping3 = (e) => {
+        setInputVal3(e.target.value)
+        console.log(inputVal3)
+    }
+
+    const emptyGraph1 = async (e) => {
+        e.preventDefault()
+        pollutantName.length = 0;
+        numofPollutant.length = 0;
+        console.log(pollutantName);
+        console.log(numofPollutant);
+        axios.get('/api/graph/empty');
+    };
+
+    const emptyGraph2 = async (e) => {
+        e.preventDefault()
+        cityName.length = 0;
+        arithmeticMean.length = 0;
+        console.log(cityName);
+        console.log(arithmeticMean);
+        axios.get('/api/graph/empty2');
+    };
+
+    const emptyGraph3 = async (e) => {
+        e.preventDefault()
+        pollu.length = 0;
+        arithMean.length = 0;
+        console.log(pollu);
+        console.log(arithMean);
+        axios.get('/api/graph/empty3');
+    };
+
 
 
     //------------------------HTML----------------------------------
@@ -427,6 +539,14 @@ const Graph = () => {
                         />
                     </div>
                 ) : null}
+                <form onSubmit={addtoTop10Pollutant}>
+                    <input type="text" value={inputVal} onChange={handleTyping} />
+                    <button className='graph_btn' type="submit">Add</button>
+                </form>
+                <form onSubmit={emptyGraph1}>
+                    <button className="graph_btn" type="submit"> Reset </button>
+                </form>
+                <p><small><i>(Enter a pollutant)</i></small></p>
             </div>
             
             <div className="graph_box">
@@ -449,6 +569,16 @@ const Graph = () => {
                         />
                     </div>
                 ) : null}
+                <form onSubmit={addtoTop10Cities}>
+                    <input type="text" value={inputVal2} onChange={handleTyping2} />
+                    <button className='graph_btn' type="submit">Add</button>
+                </form>
+                <form onSubmit={emptyGraph2}>
+                    <button className="graph_btn" type="submit">
+                        Reset
+                    </button>
+                </form>
+                <p><small><i>(Enter a city)</i></small></p>
             </div>
 
             <div className="graph_box">
@@ -471,6 +601,16 @@ const Graph = () => {
                         />
                     </div>
                 ) : null}
+                <form onSubmit={addtoTop10PolluMean}>
+                    <input type="text" value={inputVal3} onChange={handleTyping3} />
+                    <button className='graph_btn' type="submit">Add</button>
+                </form>
+                <form onSubmit={emptyGraph3}>
+                    <button className="graph_btn" type="submit">
+                        Reset
+                    </button>
+                    <p><small><i>(Enter a pollutant)</i></small></p>
+                </form>
             </div>
             <div className="graph_box">
                 <form onSubmit={heatMapSubmit}>
