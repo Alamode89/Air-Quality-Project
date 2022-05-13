@@ -30,8 +30,8 @@ var pollutantsCache = []
 var citiesCache = []
 var meansCache = []
 // true indicates that the user has modified rows
-// as a result we must update the top 10 cities, pollutants, and means again
-var cacheNotUpdated = [true, true, true]
+// as a result we must update the top 10 cities, pollutants, means, and heatmap again
+var cacheNotUpdated = [true, true, true, true]
 
 // API Endpoints
 app.get('/test/get', (req, res) => {
@@ -53,8 +53,6 @@ rows = parse.readCSVFile("final_data.csv");
 console.log("Parsed " + rows.length + " rows.");
 console.timeEnd("CSVParseTime");
 
-// parser bug: last row is always blank, needs actual fix
-rows.splice(rows.length - 1, 1);
 /*
 console.log(rows[rows.length - 5])
 console.log(rows[rows.length - 4])
@@ -71,20 +69,22 @@ console.log(rows[rows.length - 1])
 app.get('/api/delete', (req, res) => {
     // userHasSearched will be set to false again once entry has been deleted
     // requires user to search again in order to either delete or update entries
+    time("DeleteTime");
     var deleteStatus;
     deleteStatus = deleteEntry.deleteEntry(searchStatus, userHasSearched, rows);
     userHasSearched = false;
     if (deleteStatus) {
         for (let i = 0; i < cacheNotUpdated.length; i++) {
-            cacheNotUpdated[i] = true
+            cacheNotUpdated[i] = true;
         }
-        res.send({ "status" : "success" });
+        res.send({ "status" : ["success", timeEnd("DeleteTime")] });
     } else {
-        res.send({ "status" : "failed" })
+        res.send({ "status" : ["failed", timeEnd("DeleteTime")] });
     }
 })
 
 app.post('/api/search', (req, res) => {
+    time("SearchTime");
     console.log(req.body.city);
     searchStatus = search.searchCity(req.body.city, rows);
     if (Object.keys(searchStatus).length != 0) {
@@ -93,30 +93,31 @@ app.post('/api/search', (req, res) => {
         // user has now used search, may enter the update and delete functions
         userHasSearched = true;
         res.send(
-            searchStatus
-        )
+            [searchStatus, timeEnd("SearchTime")]
+        );
     } else {
-        res.send({ "status" : "failed" })
+        res.send({ "status" : ["failed", timeEnd("SearchTime")] });
     }
-
 });
 
 app.post('/api/create', (req, res) => {
+    time("CreateTime");
     var tempEntry = create.createEntry(req);
-    console.log("Create Result: " + tempEntry)
+    console.log("Create Result: " + tempEntry);
     if (tempEntry.length == 0) {
-        res.send({ status: "failed" })
+        res.send({ status: ["failed", timeEnd("CreateTime")] });
     } else {
         for (let i = 0; i < cacheNotUpdated.length; i++) {
-            cacheNotUpdated[i] = true
+            cacheNotUpdated[i] = true;
         }
         rows.push(tempEntry);
-        res.send({ status: "success" })
+        res.send({ status: ["success", timeEnd("CreateTime")] });
     }
     //console.log("Array size: " + rows.length)
 });
 
 app.post('/api/update', (req, res) => {
+    time("UpdateTime");
     console.log("Updating: " + req.body.type);
     var updateStatus = false;
     updateStatus = update.updateCity(req, rows, searchStatus, userHasSearched);
@@ -124,30 +125,33 @@ app.post('/api/update', (req, res) => {
     if (updateStatus == true) {
         userHasSearched = false;
         for (let i = 0; i < cacheNotUpdated.length; i++) {
-            cacheNotUpdated[i] = true
+            cacheNotUpdated[i] = true;
         }
         console.log("Update successful!");
-        res.send({ "status" : "success" });
+        res.send({ "status" : ["success", timeEnd("UpdateTime")] });
     } else {
         console.log("Update Failed");
-        res.send({ "status" : "failed" });
+        res.send({ "status" : ["failed", timeEnd("UpdateTime")] });
     }
 })
 
 app.get('/api/backup', (req, res) => {
+    time("BackupTime");
     backup.createBackup('backupCSV.csv', rows);
-    res.send({ "status" : "success" });
+    res.send({ "status" : ["success", timeEnd("BackupTime")] });
 });
 
 //import
 app.post("/api/import/csv", async (req, res) => {
+    time("ImportTime");
     console.log("filename: " + req.body.filename)
     let testArr = parse.readCSVFile(req.body.filename);
+    console.log(testArr)
     if (testArr.length != 0) {
         rows = testArr;
-        res.send({ "status" : "success" });
+        res.send({ "status" : ["success", timeEnd("BackupTime")] });
     } else {
-        res.send({ "status" : "failed" });
+        res.send({ "status" : ["failed", timeEnd("BackupTime")] });
     }
 });
 
@@ -168,7 +172,7 @@ app.post("/api/graph/data", async (req, res) => {
    //graphData = graphParsing.graphReadCSV(rows, graphCity)
 
    if (graphData.length == 0) {
-       res.send( "failed")
+       res.send( "failed" )
    }
    else {
     res.send({ graphData })
@@ -257,8 +261,12 @@ app.get("/api/graph/empty3", async (req, res) => {
 
 //API end point for heat map
 app.post("/api/heatmap/data", async (req, res) => {
+    let testArr = []
+    if (cacheNotUpdated[3]) {
+        cacheNotUpdated[3] = false;
+        testArr = parseHeatMap.readCSVFile('final_data.csv', 500000);
+    }
     //500000 lines data will be returned
-    let testArr = parseHeatMap.readCSVFile('final_data.csv', 500000);
     if (testArr.length != 0) {
         rows = testArr;
         res.send({ rows });
@@ -266,4 +274,5 @@ app.post("/api/heatmap/data", async (req, res) => {
         res.send({ "status": "failed" });
     }
 });
+
 app.listen(port, () => console.log(`Listening on port ${port}`));
