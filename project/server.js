@@ -30,9 +30,10 @@ var graphCity = "";
 var pollutantsCache = []
 var citiesCache = []
 var meansCache = []
+var graphData = []
 // true indicates that the user has modified rows
 // as a result we must update the top 10 cities, pollutants, means, and heatmap again
-var cacheNotUpdated = [true, true, true, true]
+var cacheNotUpdated = [true, true, true, true, true]
 
 // API Endpoints
 app.get('/test/get', (req, res) => {
@@ -379,11 +380,12 @@ app.post("/api/heatmap/data", async (req, res) => {
     }
 });
 */
+
 app.post("/api/heatmap2/data", async (req, res) => {
-    //500000 lines data will be returned
-    console.log("bruh")
-    let graphData = []
-    graphData = parseHeatMap2.readCSVFile(rows, graphCity)
+    if (cacheNotUpdated[4]) {
+        cacheNotUpdated[4] = false;
+        graphData = parseHeatMap2.readCSVFile(rows, graphCity);
+    }
     if (graphData.length != 0) {
         res.send({ graphData });
     } else {
