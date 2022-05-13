@@ -10,7 +10,9 @@ const graphParsing = require("./utility/graphParse")
 const graphTop10Pollutant = require("./utility/top10pollu")
 const graphTop10Cities = require("./utility/top10cities")
 const graphTop10Mean = require("./utility/top10mean")
-
+const searchforPollutant = require("./utility/searchPollutant")
+const searchforCity = require("./utility/searchCity")
+const searchforPolluMean = require("./utility/searchPollutantMean")
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -173,11 +175,14 @@ app.post("/api/graph/data", async (req, res) => {
    }
 });
 
+//top10pollutant
+var saving = [];
 app.post("/api/graph/top10pollutants", async (req, res) => {
     if (cacheNotUpdated[0]) {
         cacheNotUpdated[0] = false;
         let graphTopPollutants = [];
         graphTopPollutants = graphTop10Pollutant.createTop10Pollutant(rows);
+        saving = graphTopPollutants;
         graphTopPollutants = graphTopPollutants.slice(0, 11);
         pollutantsCache = graphTopPollutants;
     }
@@ -185,11 +190,21 @@ app.post("/api/graph/top10pollutants", async (req, res) => {
     res.send({ pollutantsCache });
 });
 
+var addPollutantCache = [];
+app.post("/api/graph/addPollutant", async (req, res) => {
+    addPollutantCache = searchforPollutant.searchPollutant(req.body.pollutantName, addPollutantCache,saving);
+    console.log(addPollutantCache);
+    res.send({ addPollutantCache });
+});
+
+//top10cities
+var saving2 = [];
 app.post("/api/graph/top10cities", async (req, res) => {
     if (cacheNotUpdated[1]) {
         cacheNotUpdated[1] = false;
         let graphTopCities = [];
         graphTopCities = graphTop10Cities.createTop10Cities(rows);
+        saving2 = graphTopCities;
         graphTopCities = graphTopCities.slice(0, 11);
         citiesCache = graphTopCities;
     }
@@ -197,17 +212,49 @@ app.post("/api/graph/top10cities", async (req, res) => {
     res.send({ citiesCache });
 });
 
+var addCityCache = [];
+app.post("/api/graph/addTopCities", async (req, res) => {
+    addCityCache = searchforCity.searchCity(req.body.cityName, addCityCache , saving2);
+    console.log(addCityCache);
+    res.send({ addCityCache });
+});
+
+
+//top10poluMean
+var saving3 = [];
 app.post("/api/graph/top10mean", async (req, res) => {
     if (cacheNotUpdated[2]) {
         cacheNotUpdated[2] = false;
         let graphTopMean = [];
         graphTopMean = graphTop10Mean.createTop10Means(rows);
+        saving3 = graphTopMean;
         graphTopMean = graphTopMean.slice(0, 11);
         meansCache = graphTopMean
     }
     console.log(meansCache);
     res.send({ meansCache });
 });
+
+var addPolluMeanCache = [];
+app.post("/api/graph/addTopPolluMean", async (req, res) => {
+    addPolluMeanCache = searchforPolluMean.searchPolluMean(req.body.polluName, addPolluMeanCache , saving3);
+    console.log(addPolluMeanCache);
+    res.send({ addPolluMeanCache });
+});
+
+
+app.get("/api/graph/empty", async (req, res) => {
+    addPollutantCache.length = 0;
+})
+
+app.get("/api/graph/empty2", async (req, res) => {
+    addCityCache.length = 0;
+})
+
+app.get("/api/graph/empty3", async (req, res) => {
+    addPolluMeanCache.length = 0;
+})
+
 //API end point for heat map
 app.post("/api/heatmap/data", async (req, res) => {
     //500000 lines data will be returned
