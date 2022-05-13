@@ -32,11 +32,6 @@
 }
 
 .nav:nth-of-type(2) {
-    right: 100px;
-    top: 10px;
-}
-
-.nav:nth-of-type(3) {
-    right: 30px;
+    right: 75px;
     top: 10px;
 }

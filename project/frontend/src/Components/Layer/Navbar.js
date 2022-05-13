@@ -8,8 +8,7 @@ const Navbar = () => {
         <img className="navImage" src={navImage} alt="navImage" />
       <div className="tabs">
         <a href='/' class="nav">Home</a>
-        <a href='/graph' class="nav">Data</a>
-        <a href='/test/graph' class="nav">Graph</a>
+        <a href='/graph' class="nav">Graph</a>
       </div>
     </div>
   )
