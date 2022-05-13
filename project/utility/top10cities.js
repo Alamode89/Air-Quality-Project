@@ -25,10 +25,10 @@ function createTop10Cities(rows) {
         }
     }
 
-    // var obj = {};
-    // obj['parameter_name'] = "filler";
-    // obj['num'] = 180000;
-    // tempArr.push(obj);
+    var obj = {};
+    obj['city_name'] = "filler";
+    obj['arithmetic_mean'] = 500000;
+    tempArr.push(obj);
     tempArr.sort((a,b) => (a.arithmetic_mean < b.arithmetic_mean) ? 1 : ((b.arithmetic_mean < a.arithmetic_mean) ? -1 : 0))
     // for (let i = 0; i < tempArr.length; i++) {
     //     console.log(tempArr[i]);

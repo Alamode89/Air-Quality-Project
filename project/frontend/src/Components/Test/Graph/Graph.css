@@ -84,6 +84,10 @@
   outline: none;
 }
 
+form {
+    display: inline;
+}
+
 /* colors 
 FBF8CC
 FDE4CF
