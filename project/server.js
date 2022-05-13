@@ -1,4 +1,5 @@
 //Packages: express, body-parser, ...
+const parseHeatMap = require("./utility/parseHeatMapCSV");
 const parse = require("./utility/parseCSV");
 const search = require("./utility/search");
 const deleteEntry = require("./utility/deleteEntry");
@@ -207,5 +208,15 @@ app.post("/api/graph/top10mean", async (req, res) => {
     console.log(meansCache);
     res.send({ meansCache });
 });
-
+//API end point for heat map
+app.post("/api/heatmap/data", async (req, res) => {
+    //500000 lines data will be returned
+    let testArr = parseHeatMap.readCSVFile('final_data.csv', 500000);
+    if (testArr.length != 0) {
+        rows = testArr;
+        res.send({ rows });
+    } else {
+        res.send({ "status": "failed" });
+    }
+});
 app.listen(port, () => console.log(`Listening on port ${port}`));

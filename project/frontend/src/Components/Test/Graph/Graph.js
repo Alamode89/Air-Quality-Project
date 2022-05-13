@@ -11,10 +11,102 @@ const Graph = () => {
     const [isData, setIsData] = useState(false);
     */
     const [isData, setIsData] = useState(true);
+    const [isData1, setIsData1] = useState(false);
 
     const [pollution, setPollution] = useState([]);
     const [ariMean, setAriMean] = useState([]);
+    const [years, setYears] = useState([]);
+    const [heatmap, setHeatmap] = useState({
+        series: [],
+        options: {
+            chart: {
+                height: 350,
+                type: "heatmap",
+            },
+            dataLabels: {
+                enabled: false,
+            },
+            xaxis: {
+                type: "category",
+                categories: [],
+            },
+            colors: ["#008FFB"],
+            title: {
+                text: "HeatMap Chart",
+            },
+        },
+    });
+    //
+    const heatMapSubmit = async (e) => {
+        // read ALL the data when searching for a single element
+        e.preventDefault();
+        //API call
+        axios
+            .post("/api/heatmap/data")
+            .then((resAxios) => {
+                console.log("original123: " + resAxios.data);
+                //declare array for cities and years
+                const years = [];
+                const cities = [];
+                // loop to get arrays of cities and years
+                resAxios.data.rows.map((ele) => {
+                    //condition to get unique year and years array length should be 20
+                    if (!years.includes(ele[4]) && years.length <= 20) {
+                        years.push(ele[4]);
+                    }
 
+                    //condition to get unique year and years array length should be 20
+                    if (!cities.includes(ele[10]) && ele[10] && cities.length <= 10) {
+                        cities.push(ele[10]);
+                    }
+
+                });
+                //sort array of years
+                years.sort((a, b) => a - b);
+                console.log({ years, cities });
+
+                //array for cities data with pollutant array
+                const citiesData = [];
+                // 1st loop for cities
+                for (let i = 0; i < cities.length; i++) {
+                    //object with city name and data is for array of observation count for all years
+                    const obj = {
+                        name: cities[i],
+                        data: []
+                    }
+                    //2nd loop for yeas
+                    for (let j = 0; j < years.length; j++) {
+                        // initial observation count value is 0
+                        let val = 0;
+                        //3rd loop for all data
+                        resAxios.data.rows.map(ele => {
+                            //condition to check city and year match
+                            if (ele[10] === cities[i] && ele[4] === years[j]) {
+                                //if both matches it will get the observation count and save in val
+                                val = ele[5]; //observation count
+                                // val = ele[6]; //arithmetic mean
+                            }
+                        })
+                        //update the value of observation count for that city
+                        obj.data.push(val)
+                    }
+                    //update the city data
+                    citiesData.push(obj);
+                }
+                console.log({ citiesData });
+                //copy the while heatmap object
+                const temp = heatmap;
+                /// updated the city with cities data
+                temp.series = citiesData;
+                //updated x axis with years
+                temp.options.xaxis.categories = years;
+                //uodated the heat map state
+                setHeatmap(temp);
+                setIsData1(true);
+
+            })
+            .catch((err) => console.log("err:", err));
+    };
     //Adding graph
     const graphSubmit = async (e) => {
         // read ALL the data when searching for a single element
@@ -376,6 +468,26 @@ const Graph = () => {
                             type="bar"
                             height={350}
                             width={"100%"}
+                        />
+                    </div>
+                ) : null}
+            </div>
+            <div className="graph_box">
+                <form onSubmit={heatMapSubmit}>
+                    <h1>Heat Map</h1>
+
+                    <button className="graph_btn" type="submit">
+                        Render Graph
+                    </button>
+                </form>
+                {/* // to show the heat map */}
+                {isData1 ? (
+                    <div style={{ marginTop: "30px", width: "100%" }}>
+                        <ReactApexChart
+                            options={heatmap.options}
+                            series={heatmap.series}
+                            type="heatmap"
+                            height={350}
                         />
                     </div>
                 ) : null}
