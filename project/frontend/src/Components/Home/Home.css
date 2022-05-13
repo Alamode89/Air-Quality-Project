@@ -17,6 +17,11 @@
     flex-direction: column;
 }
 
+.home_op h1 {
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+
 .home_box {
     color: white;
     width: 50%;
@@ -67,6 +72,9 @@
     
   }
   
+  .home_button {
+    margin-top: 10px;
+  }
   .home_button:active {
     transform: translateY(9px) translateX(9px);
   }

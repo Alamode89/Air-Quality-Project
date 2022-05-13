@@ -328,6 +328,7 @@ const AirQuality = () => {
                     Air Quality Interactive
                 </h2>
                 <p>Status: {statusVal}</p>
+                <a href="/test/graph">Graph</a>
             </header>
 
             <div className="aq_box">

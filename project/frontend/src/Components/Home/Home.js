@@ -13,6 +13,7 @@ const Home = () => {
     }
     //------------------------Status----------------------------------
     const [statusVal, setStatusVal] = useState("n/a");
+    const [timeVal, setTimeVal] = useState("0.00 ms");
 
     //------------------------Search----------------------------------
 
@@ -41,7 +42,8 @@ const Home = () => {
         console.log("Our input: " + incoming.city)
         axios.post('/api/search', incoming)
             .then(resAxios => {
-                if (resAxios.data.status == "failed") {
+                setTimeVal(resAxios.data[1])
+                if (resAxios.data[0] == "failed") {
                     setStatusVal("Search Failed")
                 }
                 else {
@@ -50,17 +52,17 @@ const Home = () => {
                 console.log("Incoming Data: " + JSON.stringify(resAxios.data))
                 setSearch({
                     ...search,
-                    "latitude": resAxios.data.latitude,
-                    "longitude": resAxios.data.longitude,
-                    "parameter": resAxios.data.parameter_name,
-                    "metric": resAxios.data.metric_used,
-                    "year": resAxios.data.year,
-                    "observation_cnt": resAxios.data.observation_count,
-                    "arithmetic_mean": resAxios.data.arithmetic_mean,
-                    "arithmetic_stdDev": resAxios.data.arithmetic_standard_dev,
-                    "county_name": resAxios.data.county_name,
-                    "state_name": resAxios.data.state_name,
-                    "city_name": resAxios.data.city_name
+                    "latitude": resAxios.data[0].latitude,
+                    "longitude": resAxios.data[0].longitude,
+                    "parameter": resAxios.data[0].parameter_name,
+                    "metric": resAxios.data[0].metric_used,
+                    "year": resAxios.data[0].year,
+                    "observation_cnt": resAxios.data[0].observation_count,
+                    "arithmetic_mean": resAxios.data[0].arithmetic_mean,
+                    "arithmetic_stdDev": resAxios.data[0].arithmetic_standard_dev,
+                    "county_name": resAxios.data[0].county_name,
+                    "state_name": resAxios.data[0].state_name,
+                    "city_name": resAxios.data[0].city_name
                 })
                 setSearched(true);
             })
@@ -80,10 +82,11 @@ const Home = () => {
         axios.get('/api/delete')
             .then(resAxios => {
                 console.log("Status: " + JSON.stringify(resAxios.data.status))
-                if (resAxios.data.status === "success") {
+                setTimeVal(resAxios.data[1])
+                if (resAxios.data[0] === "success") {
                     setStatusVal("Deletion Success")
                 }
-                else if (resAxios.data.status === "failed") {
+                else if (resAxios.data[0] === "failed") {
                     setStatusVal("Deletion Failed")
                 }
                 else {
@@ -153,10 +156,11 @@ const Home = () => {
         axios.post('/api/create', createPayload)
             .then(resAxios => {
                 console.log("Status: " + JSON.stringify(resAxios.data.status))
-                if (resAxios.data.status === "success") {
+                setTimeVal(resAxios.data[1])
+                if (resAxios.data[0] === "success") {
                     setStatusVal("Creation Successful")
                 }
-                else if (resAxios.data.status === "failed") {
+                else if (resAxios.data[0] === "failed") {
                     setStatusVal("Creation Failed")
                 }
                 else {
@@ -226,10 +230,11 @@ const Home = () => {
         axios.post('/api/update', updatePayload)
             .then(resAxios => {
                 console.log("Status: " + JSON.stringify(resAxios.data))
-                if (resAxios.data.status === "success") {
+                setTimeVal(resAxios.data[1])
+                if (resAxios.data[0] === "success") {
                     setStatusVal("Update Successful")
                 }
-                else if (resAxios.data.status === "failed") {
+                else if (resAxios.data[0] === "failed") {
                     setStatusVal("Update Failed")
                 }
                 else {
@@ -248,6 +253,9 @@ const Home = () => {
         setStatusVal("Backing up...")
         e.preventDefault()
         axios.get('/api/backup')
+            .then(resAxios => {
+                setTimeVal(resAxios.data[1])
+            })
         setStatusVal("Backup Success")
     }
     //-----------------------Import---------------------------------
@@ -288,11 +296,12 @@ const Home = () => {
         axios.post('/api/import/csv', obj)
             .then(resAxios => {
                 console.log("Status: " + JSON.stringify(resAxios.data))
-                if (resAxios.data.status === "success") {
+                setTimeVal(resAxios.data[1])
+                if (resAxios.data[0] === "success") {
                     setStatusVal("Import Successful")
                 }
-                else if (resAxios.data.status === "failed") {
-                    setStatusVal("Import Failed")
+                else if (resAxios.data[0] === "failed") {
+                    setStatusVal("(Import)Filename does not exist. Please try again.")
                 }
                 else {
                     setStatusVal("Unknown Import Error")
@@ -306,6 +315,8 @@ const Home = () => {
     return (
         <div className="Home">
             <h1>Air Quality Index Dataset</h1>
+            <p>Status: {statusVal}</p>
+            <p>Time: {timeVal}</p>
             <div className="home_op">
                 {
                     !searched ? <>

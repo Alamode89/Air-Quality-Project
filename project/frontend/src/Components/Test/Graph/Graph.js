@@ -496,6 +496,7 @@ const Graph = () => {
                 <h2>
                     Graph
                 </h2>
+                <p>(css is messed up here since we share same css classes as MAIN graph's page)</p>
             </header>
             <div className="graph_box">
                 <form onSubmit={graphSubmit}>
@@ -622,7 +623,7 @@ const Graph = () => {
                 </form>
                 {/* // to show the heat map */}
                 {isData1 ? (
-                    <div style={{ marginTop: "30px", width: "100%" }}>
+                    <div style={{ marginTop: "30px", width: "100%"}}>
                         <ReactApexChart
                             options={heatmap.options}
                             series={heatmap.series}
