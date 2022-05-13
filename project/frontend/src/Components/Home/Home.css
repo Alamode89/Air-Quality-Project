@@ -17,7 +17,6 @@
     flex-direction: column;
 }
 
-
 .home_box {
     color: white;
     width: 50%;
@@ -52,8 +51,10 @@
   
   .home_box input {
     border-radius: 10px;
-    width: 15rem;
+    height: 20px;
+    width: 60%;
   }
+
   .home_box button {
     border-radius: 10px;
     background-color: white;
@@ -72,3 +73,10 @@
   .home_button:focus {
     outline: none;
   }
+
+.search_bar {
+  border: 1px solid gray;
+  border-radius: 5px;
+  height: 20px;
+  width: 100%;
+}
