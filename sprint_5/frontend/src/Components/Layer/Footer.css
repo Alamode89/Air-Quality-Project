@@ -1,0 +1,59 @@
+.footer {
+    position: fixed;
+    left: 0;
+    height: 45px;
+    bottom: 0;
+    width: 100%;
+    background-color: #62929E;
+    color: white;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo {
+    width: 41.78px;
+    height: 40px;
+    position: absolute;
+    bottom: 2px;
+    margin-left: 10px;
+    border-radius: 50%;
+}
+
+.footer img {
+    animation: rotation 5s infinite linear;
+}
+
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(359deg);
+    }
+}
+
+.btn_nav {
+    position: fixed;
+    padding: .3rem .5rem;
+    font-size: 1.2rem;
+    color: #fff;
+    cursor: pointer;
+    transition: all .2s ease-in-out;
+}
+
+.btn_nav:hover {
+    transform: scale(1.1);
+}
+
+.btn_nav:nth-of-type(1) {
+    right: 68px;
+    bottom: 5px;
+}
+
+.btn_nav:nth-of-type(2) {
+    right: 0;
+    bottom: 5px;
+}
