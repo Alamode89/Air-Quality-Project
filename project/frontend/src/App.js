@@ -1,5 +1,6 @@
 import './App.css';
 import AirQuality from './Components/Test/AirQuality/AirQuality';
+import AirQualityGraph from './Components/Test/Graph/Graph';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from './Components/Layer/Header';
 import Footer from "./Components/Layer/Footer";
@@ -18,6 +19,8 @@ function App() {
         <Routes>
           <Route exact path='/' element={<Home />} />
           <Route exact path='/graph' element={<Graph />} />
+          <Route exact path='/test' element={<AirQuality />} />
+          <Route exact path='/test/graph' element={<AirQualityGraph />} />
         </Routes>
       
       </Router>

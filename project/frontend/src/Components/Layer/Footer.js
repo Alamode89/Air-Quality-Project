@@ -5,7 +5,7 @@ import logo from '../../favicon.png';
 const Footer = () => {
     return (
         <div className='footer'>
-            <p>Made by yours truly, Yahallo Inc.<img className="logo" src={logo} alt="logo" /></p>
+            <p>Made by yours truly, Yahallo Inc.<a href="/test" ><img className="logo" src={logo} alt="logo" /></a></p>
         </div>
     )
 }

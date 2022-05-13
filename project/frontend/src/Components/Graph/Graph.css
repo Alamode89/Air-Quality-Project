@@ -11,7 +11,7 @@
   }
   
   .graph_header {
-    background-color: white;
+    background-color: #212529;
     min-height: 50%;
     width: 65%;
     
@@ -64,6 +64,13 @@
   .graph_box:nth-of-type(5) {
     border: 2px solid #F1C0E8;
     box-shadow: 5px 10px #F1C0E8;
+    color: red;
+  }
+
+  .graph_box:nth-of-type(6) {
+    border: 2px solid #CFBAF0;
+    box-shadow: 5px 10px #CFBAF0;
+    color: red;
   }
   
   .graph_box input {
