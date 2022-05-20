@@ -242,7 +242,7 @@ const Graph = () => {
         axios
             .post("/api/graph/data")
             .then((resAxios) => {
-                console.log("original: " + resAxios.data.graphData)
+                console.log("original: " + resAxios.data.graphDataCache)
                 if (resAxios.data == "failed") {
                     alert("Please search a city first!")
                 }
@@ -294,7 +294,7 @@ const Graph = () => {
                 */
                 const incPollution = [];
                 const arithMean = [];
-                resAxios.data.graphData.map((val, ind) => {
+                resAxios.data.graphDataCache.map((val, ind) => {
                     if (ind) {
                         incPollution.push(val.pollutant);
                         arithMean.push(val.arithmetic_mean);
