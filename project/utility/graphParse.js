@@ -20,7 +20,12 @@ function graphReadCSV(rows, graphCity) {
 }
 */
 
-function graphReadCSV(rows, graphCity) {
+function graphReadCSV(rows, graphCity, increAnaCache, tempGraphOne) {
+    if (increAnaCache == false) {
+      var tempArr = tempGraphOne;
+      
+      return tempArr;
+    }
     var tempArr = [];
     var obj = {};
     obj['pollutant'] = rows[0][2];
@@ -28,7 +33,8 @@ function graphReadCSV(rows, graphCity) {
     obj['count'] = 1;
     tempArr.push(obj);
     for ( let i = 1; i < rows.length; i++ ) {
-      if (graphCity == rows[i][10]) {
+      //console.log("Checking " + graphCity + " with " + rows[i][10])
+      if (graphCity.toLowerCase() == rows[i][10].toLowerCase()) {
         var indexFound = tempArr.findIndex((obj) => obj.pollutant === rows[i][2]);
         if (indexFound != -1){
             stringtoInt = parseFloat(rows[i][6]);
@@ -49,23 +55,25 @@ function graphReadCSV(rows, graphCity) {
       }
     }
 
-    /*
+    
     var obj = {};
     obj['pollutant'] = "filler";
-    obj['arithmetic_mean'] = 6000000;
+    obj['arithmetic_mean'] = 6000000000000;
     obj['count'] = 0;
-    tempArr.push(obj);
-    */
-    //tempArr.sort((a,b) => (a.arithmetic_mean < b.arithmetic_mean) ? 1 : ((b.arithmetic_mean < a.arithmetic_mean) ? -1 : 0))
+    //add to beginning of array since graph doesnt use arr[0]
+    tempArr.unshift(obj);
     
+    //tempArr.sort((a,b) => (a.arithmetic_mean < b.arithmetic_mean) ? 1 : ((b.arithmetic_mean < a.arithmetic_mean) ? -1 : 0))
+    /*
     for (let i = 0; i < tempArr.length; i++) {
         tempArr[i].arithmetic_mean = tempArr[i].arithmetic_mean / tempArr[i].count;
         console.log(tempArr[i].pollutant + ":" + tempArr[i].arithmetic_mean + "," + tempArr[i].count)
     }
+    */
 
     
-    tempArr.sort((a,b) => (a.arithmetic_mean < b.arithmetic_mean) ? 1 : ((b.arithmetic_mean < a.arithmetic_mean) ? -1 : 0))
-    console.log(tempArr)
+    //tempArr.sort((a,b) => (a.arithmetic_mean < b.arithmetic_mean) ? 1 : ((b.arithmetic_mean < a.arithmetic_mean) ? -1 : 0))
+    console.log("hi" + tempArr)
     
     return tempArr
 }
