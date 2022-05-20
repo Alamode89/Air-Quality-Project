@@ -383,7 +383,7 @@ const Graph = () => {
             .then((resAxios) => {
                 const pollutant2 = [];
                 const numP2 = [];
-                resAxios.data.addPollutantCache.map((val, ind) => {
+                resAxios.data.pollutantsCache.map((val, ind) => {
                     if (ind) {
                         pollutant2.push(val.parameter_name);
                         numP2.push(val.num);
@@ -459,7 +459,7 @@ const Graph = () => {
             .then((resAxios) => {
                 const city2 = [];
                 const aMean2 = [];
-                resAxios.data.addCityCache.map((val, ind) => {
+                resAxios.data.citiesCache.map((val, ind) => {
                     if (ind) {
                         city2.push(val.city_name);
                         aMean2.push(val.arithmetic_mean);
@@ -532,7 +532,7 @@ const Graph = () => {
             .then((resAxios) => {
                 const p = [];
                 const m = [];
-                resAxios.data.addPolluMeanCache.map((val, ind) => {
+                resAxios.data.meansCache.map((val, ind) => {
                     if (ind) {
                         p.push(val.pollutant);
                         m.push(val.arithmetic_mean);
@@ -596,31 +596,65 @@ const Graph = () => {
         console.log(inputVal3)
     }
 
-    const emptyGraph1 = async (e) => {
+    const resetGraph1 = async (e) => {
         e.preventDefault()
         pollutantName.length = 0;
         numofPollutant.length = 0;
-        console.log(pollutantName);
-        console.log(numofPollutant);
-        axios.get('/api/graph/empty');
+        axios
+            .post('/api/graph/reset1')
+            .then((resAxios) => {
+                const pollutant = [];
+                const numP = [];
+                resAxios.data.reset1.map((val, ind) => {
+                    if (ind) {
+                        pollutant.push(val.parameter_name);
+                        numP.push(val.num);
+                    }
+                });
+                setPollutantName(pollutant);
+                setnumofPollutant(numP);
+                
+            })
     };
 
-    const emptyGraph2 = async (e) => {
+    const resetGraph2 = async (e) => {
         e.preventDefault()
         cityName.length = 0;
         arithmeticMean.length = 0;
-        console.log(cityName);
-        console.log(arithmeticMean);
-        axios.get('/api/graph/empty2');
+        axios
+            .post('/api/graph/reset2')
+            .then((resAxios) => {
+                const city2 = [];
+                const aMean2 = [];
+                resAxios.data.reset2.map((val, ind) => {
+                    if (ind) {
+                        city2.push(val.city_name);
+                        aMean2.push(val.arithmetic_mean);
+                    }
+                });
+                setCityName(city2);
+                setarithmeticMean(aMean2);
+            });
     };
 
-    const emptyGraph3 = async (e) => {
+    const resetGraph3 = async (e) => {
         e.preventDefault()
         pollu.length = 0;
         arithMean.length = 0;
-        console.log(pollu);
-        console.log(arithMean);
-        axios.get('/api/graph/empty3');
+        axios
+            .post('/api/graph/reset3')
+            .then((resAxios) => {
+                const pollut = [];
+                const arithmeticMean = [];
+                resAxios.data.reset3.map((val, ind) => {
+                    if (ind) {
+                        pollut.push(val.pollutant);
+                        arithmeticMean.push(val.arithmetic_mean);
+                    }
+                });
+                setpolluName(pollut);
+                setarithMean(arithmeticMean);
+            });
     };
 
 
@@ -679,7 +713,7 @@ const Graph = () => {
                     <input type="text" value={inputVal} onChange={handleTyping} />
                     <button className='graph_btn' type="submit">Add</button>
                 </form>
-                <form onSubmit={emptyGraph1}>
+                <form onSubmit={resetGraph1}>
                     <button className="graph_btn" type="submit"> Reset </button>
                 </form>
                 <p><small><i>(Enter a pollutant)</i></small></p>
@@ -709,7 +743,7 @@ const Graph = () => {
                     <input type="text" value={inputVal2} onChange={handleTyping2} />
                     <button className='graph_btn' type="submit">Add</button>
                 </form>
-                <form onSubmit={emptyGraph2}>
+                <form onSubmit={resetGraph2}>
                     <button className="graph_btn" type="submit">
                         Reset
                     </button>
@@ -741,7 +775,7 @@ const Graph = () => {
                     <input type="text" value={inputVal3} onChange={handleTyping3} />
                     <button className='graph_btn' type="submit">Add</button>
                 </form>
-                <form onSubmit={emptyGraph3}>
+                <form onSubmit={resetGraph3}>
                     <button className="graph_btn" type="submit">
                         Reset
                     </button>
