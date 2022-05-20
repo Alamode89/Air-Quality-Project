@@ -193,7 +193,7 @@ app.post("/api/graph/data", async (req, res) => {
    // DEBUG for graph 1
    graphData = graphParsing.graphReadCSV(rows, graphCity)
    //splice just cuts
-   graphData = graphData.splice(0,11);
+   graphData = graphData.slice(0, 11);
    console.log(graphData)
    //graphData = graphParsing.graphReadCSV(rows, graphCity)
 

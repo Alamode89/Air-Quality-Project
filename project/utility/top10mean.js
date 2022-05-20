@@ -6,7 +6,7 @@ function createTop10Means(rows) {
     obj['pollutant'] = rows[0][2];
     //var stringtoInt = parseFloat(rows[0][6]);
     obj['arithmetic_mean'] = null;
-    obj['count'] = 0;
+    obj['count'] = 1;
     tempArr.push(obj);
     for ( let i = 1; i < rows.length; i++ ) {
         var indexFound = tempArr.findIndex((obj) => obj.pollutant === rows[i][2]);
@@ -22,7 +22,7 @@ function createTop10Means(rows) {
                 obj['pollutant'] = rows[i][2];
                 stringtoInt = parseFloat(rows[i][6]);
                 obj['arithmetic_mean'] = stringtoInt;
-                obj['count'] = 0;
+                obj['count'] = 1;
                 tempArr.push(obj);
             }
         }
